@@ -1,4 +1,4 @@
-# M5_Team_MCV
+# M5_Team7_MCV
 Team 5 of the M5 at the Master in Computer Vision.
 
 ## Team members
