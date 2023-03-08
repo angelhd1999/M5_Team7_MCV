@@ -1,5 +1,5 @@
-# M5_Team_MCV
-Team 5 of the M5 at the Master in Computer Vision.
+# M5_Team7_MCV
+Team 7 of the M5 at the Master in Computer Vision.
 
 ## Team members
 - **Àngel Herrero Díaz** - herreroangel.pro@gmail.com
