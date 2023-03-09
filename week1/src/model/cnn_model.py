@@ -11,56 +11,52 @@ class MyCnnModel(nn.Module):
     def __init__(self):
         super(MyCnnModel, self).__init__()
         self.conv1 = nn.Conv2d(
-            in_channels=3, out_channels=16, kernel_size=3, padding=1)
+            in_channels=3, out_channels=32, kernel_size=3, padding=1)
         self.conv2 = nn.Conv2d(
-            in_channels=16, out_channels=16, kernel_size=3, padding=1)
+            in_channels=32, out_channels=32, kernel_size=1, padding=0)
 
         self.conv3 = nn.Conv2d(
-            in_channels=16, out_channels=32, kernel_size=3, padding=1)
+            in_channels=32, out_channels=64, kernel_size=3, padding=1)
         self.conv4 = nn.Conv2d(
-            in_channels=32, out_channels=32, kernel_size=3, padding=1)
+            in_channels=64, out_channels=64, kernel_size=1, padding=0)
 
         self.conv5 = nn.Conv2d(
-            in_channels=32, out_channels=64, kernel_size=3, padding=1)
-        self.conv6 = nn.Conv2d(
-            in_channels=64, out_channels=64, kernel_size=3, padding=1)
-        self.conv7 = nn.Conv2d(
-            in_channels=64, out_channels=64, kernel_size=3, padding=1)
+            in_channels=64, out_channels=128, kernel_size=3, padding=1)
 
         # Define a max pooling layer to use repeatedly in the forward function
         # The role of pooling layer is to reduce the spatial dimension (H, W) of the input volume for next layers.
         # It only affects weight and height but not depth.
         self.maxpool = nn.MaxPool2d(kernel_size=2, stride=2)
+        self.globalpool = nn.AdaptiveAvgPool2d((1,1))
 
         # output shape of maxpool3 is 64*28*28
-        self.fc14 = nn.Linear(64*28*28, 500)
-        self.fc15 = nn.Linear(500, 50)
-        # output of the final DC layer = 6 = number of classes
-        self.fc16 = nn.Linear(50, 8)
+        self.fc14 = nn.Linear(128, 256)
+        # output of the final DC layer = 8 = number of classes
+        self.fc16 = nn.Linear(256, 8)
 
     def forward(self, x):
         x = F.relu(self.conv1(x))
+        x1 = self.maxpool(x)
+
         x = F.relu(self.conv2(x))
-        # maxpool1 output shape is 16*112*112 (112 = (224-2)/2 + 1)
-        x = self.maxpool(x)
-        x = F.relu(self.conv3(x))
+        x2 = self.maxpool(x)
+        concat1 = torch.add(x1, x2)
+
+        x = F.relu(self.conv3(concat1))
+        x3 = self.maxpool(x)
         x = F.relu(self.conv4(x))
-        # maxpool2 output shape is 32*56*56 (56 = (112-2)/2 + 1)
-        x = self.maxpool(x)
-        x = F.relu(self.conv5(x))
-        x = F.relu(self.conv6(x))
-        x = F.relu(self.conv7(x))
-        # maxpool3 output shape is 64*28*28 (28 = (56-2)/2 + 1)
-        x = self.maxpool(x)
+        x4 = self.maxpool(x)
+        concat2 = torch.add(x3, x4)
+
+        x = F.relu(self.conv5(concat2))
+        x5 = self.maxpool(x)
+        x = self.globalpool(x5)
 
         x = x.reshape(x.shape[0], -1)
         x = F.relu(self.fc14(x))
-        # x = F.dropout(x, 0.5) #dropout was included to combat overfitting
-        x = F.relu(self.fc15(x))
         x = F.dropout(x, 0.5)
         x = self.fc16(x)
         return x
-
 
 def train_model(model, device, train_loader, val_loader, criterion, optimizer, num_epochs=5):
     '''We train the model for a number of epochs, and for each epoch we iterate through the training and
