@@ -9,11 +9,11 @@ def build_annotation_dataframe(image_location, annot_location, output_csv_name):
     """Builds dataframe and csv file for pytorch training from a directory of folders of images.
     Install csv module if not already installed.
     Args: 
-    image_location: image directory path, e.g. r'.\data\train'
-    annot_location: annotation directory path
-    output_csv_name: string of output csv file name, e.g. 'train.csv'
+        image_location: image directory path, e.g. r'.\data\train'
+        annot_location: annotation directory path
+        output_csv_name: string of output csv file name, e.g. 'train.csv'
     Returns:
-    csv file with file names, file paths, class names and class indices
+        csv file with file names, file paths, class names and class indices
     """
     class_lst = os.listdir(
         image_location)  # returns a LIST containing the names of the entries (folder names in this case) in the directory.
@@ -46,10 +46,18 @@ def check_annot_dataframe(annot_df):
 
 
 def transform_bilinear(output_img_width, output_img_height):
+    """Resize and change the range of the input image to the specified height and width using bilinear interpolation.
+
+    Args:
+        output_img_width (int): Desired width of the output image.
+        output_img_height (int): Desired height of the output image.
+
+    Returns:
+        A callable object that, when called on an image, returns the resized image.
+    """
     image_transform = transforms.Compose([
         transforms.ToTensor(),
-        transforms.Normalize(mean=[0.5, 0.5, 0.5], std=[0.5, 0.5, 0.5]),
-        transforms.Resize((output_img_width, output_img_height),
-                          interpolation=PIL.Image.BILINEAR)
+        transforms.Normalize(mean=[0.5, 0.5, 0.5], std=[0.5, 0.5, 0.5]), # ? Are we sure images are in range [0, 1]? More info: https://discuss.pytorch.org/t/understanding-transform-normalize/21730
+        transforms.Resize((output_img_width, output_img_height), interpolation=PIL.Image.BILINEAR)
     ])
     return image_transform
