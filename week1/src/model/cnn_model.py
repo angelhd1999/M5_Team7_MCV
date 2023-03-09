@@ -63,18 +63,31 @@ class MyCnnModel(nn.Module):
 
 
 def train_model(model, device, train_loader, val_loader, criterion, optimizer, num_epochs=5):
-    """
-    We train the model for a number of epochs, and for each epoch we iterate through the training and validation datasets, calculate the loss and accuracy, and log the results to W&B
+    '''We train the model for a number of epochs, and for each epoch we iterate through the training and
+    validation datasets, calculate the loss and accuracy, and log the results to W&B
     
-    :param model: the model to train
-    :param device: the device to run the training on (CPU or GPU)
-    :param train_loader: the training data loader
-    :param val_loader: validation data loader
-    :param criterion: the loss function
-    :param optimizer: The optimizer used to train the model
-    :param num_epochs: number of epochs to train for, defaults to 5 (optional)
-    :return: The model and the train_result_dict
-    """
+    Parameters
+    ----------
+    model
+        the model to train
+    device
+        the device to run the training on (CPU or GPU)
+    train_loader
+        the training data loader
+    val_loader
+        validation data loader
+    criterion
+        the loss function
+    optimizer
+        The optimizer used to train the model
+    num_epochs, optional
+        number of epochs to train for, defaults to 5 (optional)
+    
+    Returns
+    -------
+        The model and the train_result_dict
+    
+    '''
     # device = get_default_device()
     model = model.to(device)
     train_result_dict = {'epoch': [], 'train_loss': [], 'val_loss': [], 'accuracy': [], 'val_accuracy': [], 'time': []}
@@ -143,11 +156,15 @@ def train_model(model, device, train_loader, val_loader, criterion, optimizer, n
 
 
 def visualize_training(train_result_dictionary):
-    """
-    It takes a dictionary of training results and plots the training and validation loss and accuracy in a single plot
+    '''It takes a dictionary of training results and plots the training and validation loss and accuracy in
+    a single plot
     
-    :param train_result_dictionary: This is the dictionary that contains the training results
-    """
+    Parameters
+    ----------
+    train_result_dictionary
+        This is the dictionary that contains the training results
+    
+    '''
     # Define Data
     df = pd.DataFrame(train_result_dictionary)
     x = df['epoch']
@@ -178,8 +195,21 @@ def visualize_training(train_result_dictionary):
 
 
 def infer(model, device, data_loader):
-    '''
-    Calculate predicted class indices of the data_loader by the trained model 
+    '''> The function takes a trained model, a device, and a data loader as input, and returns the
+    predicted class indices and the true class indices of the data loader
+    
+    Parameters
+    ----------
+    model
+        the model to be evaluated
+    device
+        the device to run the model on (CPU or GPU)
+    data_loader
+        the data loader for the test set
+    
+    Returns
+    -------
+        The predicted class indices and the true class indices
     '''
     model = model.to(device)
     y_pred = []
@@ -198,8 +228,24 @@ def infer(model, device, data_loader):
 
 
 def infer_single_image(model, device, image_path, transform):
-    '''
-    Calculate predicted class index of the image by the trained model 
+    '''It takes an image, transforms it, and then passes it through the model to get a predicted class
+    index.
+    
+    Parameters
+    ----------
+    model
+        the trained model
+    device
+        the device to run the model on (CPU or GPU)
+    image_path
+        the path to the image you want to classify
+    transform
+        This is the transformation that we applied to the images in the training set.
+    
+    Returns
+    -------
+        The predicted class index of the image.
+    
     '''
     # Prepare the Image
     image = cv2.imread(image_path)  # read image by cv2
