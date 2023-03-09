@@ -7,35 +7,6 @@ import matplotlib.pyplot as plt
 import cv2
 import wandb
 
-# def default_loss():
-#     return nn.CrossEntropyLoss()
-
-
-# def default_optimizer(model, learning_rate = 0.001):
-#     return optim.Adam(model.parameters(), lr = learning_rate)
-
-
-# def get_default_device():
-#     """Picking GPU if available or else CPU"""
-#     if torch.cuda.is_available():
-#         return torch.device('cuda')
-#     else:
-#         return torch.device('cpu')
-
-
-# def model_prep_and_summary(model, device):
-#     """
-#     Move model to GPU and print model summary
-#     """
-#     # Define the model and move it to GPU:
-#     model = model
-#     model = model.to(device)
-#     print('Current device: ' + str(device))
-#     print('Is Model on CUDA: ' + str(next(model.parameters()).is_cuda))
-#     # Display model summary:
-#     summary(model, (INPUT_CHANNEL, INPUT_WIDTH, INPUT_HEIGHT))
-
-
 class MyCnnModel(nn.Module):
     def __init__(self):
         super(MyCnnModel, self).__init__()
@@ -92,16 +63,29 @@ class MyCnnModel(nn.Module):
 
 
 def train_model(model, device, train_loader, val_loader, criterion, optimizer, num_epochs=5):
+    """
+    We train the model for a number of epochs, and for each epoch we iterate through the training and validation datasets, calculate the loss and accuracy, and log the results to W&B
+    
+    :param model: the model to train
+    :param device: the device to run the training on (CPU or GPU)
+    :param train_loader: the training data loader
+    :param val_loader: validation data loader
+    :param criterion: the loss function
+    :param optimizer: The optimizer used to train the model
+    :param num_epochs: number of epochs to train for, defaults to 5 (optional)
+    :return: The model and the train_result_dict
+    """
     # device = get_default_device()
     model = model.to(device)
-    train_result_dict = {'epoch': [], 'train_loss': [],
-                         'val_loss': [], 'accuracy': [], 'time': []}
+    train_result_dict = {'epoch': [], 'train_loss': [], 'val_loss': [], 'accuracy': [], 'val_accuracy': [], 'time': []}
     wandb.watch(model, criterion, log="all", log_freq=10) # WANDB WATCH
     for epoch in range(num_epochs):
         start_time = time.time()
         train_loss = 0.0
         correct = 0
         total = 0
+        val_correct = 0
+        val_total = 0
         model.train()  # set the model to training mode, parameters are updated
         for i, data in enumerate(train_loader, 0):
             image, class_name, class_index = data
@@ -116,7 +100,7 @@ def train_model(model, device, train_loader, val_loader, criterion, optimizer, n
             _, predicted = torch.max(outputs.data, 1)
             total += class_index.size(0)
             correct += (predicted == class_index).sum().item()
-            epoch_accuracy = round(float(correct)/float(total)*100, 2)
+        train_accuracy = round(float(correct)/float(total)*100, 2) # ! We have put train_accuracy out of the loop
 
         # Here evaluation is combined together with
         val_loss = 0.0
@@ -128,6 +112,10 @@ def train_model(model, device, train_loader, val_loader, criterion, optimizer, n
             outputs = model(image)
             loss = criterion(outputs, class_index)
             val_loss += loss.item()
+            _, predicted = torch.max(outputs.data, 1)
+            val_total += class_index.size(0)
+            val_correct += (predicted == class_index).sum().item()
+        val_accuracy = round(float(val_correct)/float(val_total)*100, 2)
 
         # print statistics every 1 epoch
         # divide by the length of the minibatch because loss.item() returns the loss of the whole minibatch
@@ -139,21 +127,34 @@ def train_model(model, device, train_loader, val_loader, criterion, optimizer, n
         train_result_dict['epoch'].append(epoch + 1)
         train_result_dict['train_loss'].append(train_loss_result)
         train_result_dict['val_loss'].append(val_loss_result)
-        train_result_dict['accuracy'].append(epoch_accuracy)
+        train_result_dict['accuracy'].append(train_accuracy)
+        train_result_dict['val_accuracy'].append(val_accuracy)
         train_result_dict['time'].append(epoch_time)
-        wandb.log({"train_loss":train_loss_result, "acc":epoch_accuracy, "val_loss": val_loss_result}, step=i)
-        print(f'Epoch {epoch+1} \t Training Loss: {train_loss_result} \t Validation Loss: {val_loss_result} \t Epoch Train Accuracy (%): {epoch_accuracy} \t Epoch Time (s): {epoch_time}')
+        wandb.log({"train_loss":train_loss_result, "acc":train_accuracy, "val_loss": val_loss_result, "val_acc": val_accuracy}, step=i)
+        print(f'''Epoch {epoch+1} 
+            \t Training Loss: {train_loss_result} 
+            \t Validation Loss: {val_loss_result} 
+            \t Epoch Train Accuracy (%): {train_accuracy}
+            \t Epoch Validation Accuracy (%): {val_accuracy} 
+            \t Epoch Time (s): {epoch_time}
+        ''')
     # return the trained model and the loss dictionary
     return model, train_result_dict
 
 
 def visualize_training(train_result_dictionary):
+    """
+    It takes a dictionary of training results and plots the training and validation loss and accuracy in a single plot
+    
+    :param train_result_dictionary: This is the dictionary that contains the training results
+    """
     # Define Data
     df = pd.DataFrame(train_result_dictionary)
     x = df['epoch']
     data_1 = df['train_loss']
     data_2 = df['val_loss']
     data_3 = df['accuracy']
+    data_4 = df['val_accuracy']
 
     # Create Plot
     fig, ax1 = plt.subplots(figsize=(7, 7))
@@ -165,6 +166,7 @@ def visualize_training(train_result_dictionary):
     # Adding Twin Axes
     ax2 = ax1.twinx()
     ax2.plot(x, data_3, color='green', label='Training Accuracy')
+    ax2.plot(x, data_4, color='orange', label='Validation Accuracy')
 
     # Add label
     plt.ylabel('Accuracy')

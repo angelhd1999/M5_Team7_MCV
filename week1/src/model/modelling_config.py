@@ -6,15 +6,28 @@ import torch.optim as optim
 
 
 def default_loss():
+    """
+    It returns a function that takes in a model and returns a loss function that takes in the model's output and the target
+    :return: CrossEntropyLoss
+    """
     return nn.CrossEntropyLoss()
 
 
 def default_optimizer(model, learning_rate = 0.001):
+    """
+    It returns an Adam optimizer as default with the learning rate set to 0.001 and the model's parameters
+    
+    :param model: The model we're training
+    :param learning_rate: The learning rate for the optimizer
+    :return: The optimizer is being returned.
+    """
     return optim.Adam(model.parameters(), lr = learning_rate)
 
 
 def get_default_device():
-    """Picking GPU if available or else CPU"""
+    """
+    Picking GPU if available or else CPU
+    """
     if torch.cuda.is_available():
         return torch.device('cuda')
     else:

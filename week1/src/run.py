@@ -49,7 +49,7 @@ config = {
 
 run = wandb.init(project="mit_cnn", reinit="True", config=config)
 
-#Creating and Preprocessing input data
+# Creating and Preprocessing input data
 train_df = build_annotation_dataframe(image_location=TRAIN_DATA_LOC, annot_location=ANNOT_LOC, output_csv_name='train.csv')
 test_df = build_annotation_dataframe(image_location=TEST_DATA_LOC, annot_location=ANNOT_LOC, output_csv_name='test.csv')
 class_names = list(train_df['class_name'].unique())
@@ -57,22 +57,21 @@ print(class_names)
 print(check_annot_dataframe(train_df))
 print(check_annot_dataframe(test_df))
 
-
+# Creating the train, test and validation datasets
 image_transform = transform_bilinear(INPUT_WIDTH, INPUT_HEIGHT)
 main_dataset = MITDataset(annot_df = train_df, transform=image_transform)
 train_dataset, validation_dataset = create_validation_dataset(main_dataset, validation_proportion=0.2)
 print('Train set size: ', len(train_dataset))
 print('Validation set size: ', len(validation_dataset))
-
 test_dataset = MITDataset(annot_df = test_df, transform=image_transform)
 print('Test set size: ', len(test_dataset))
 
-#configuring the dataloaders
+# Configuring the DataLoaders
 train_loader = DataLoader(train_dataset, batch_size = config["batch_size"], shuffle=True, num_workers = NUM_WORKERS)
 val_loader = DataLoader(validation_dataset, batch_size = config["batch_size"], shuffle=True, num_workers = NUM_WORKERS)
 test_loader = DataLoader(test_dataset, batch_size = config["batch_size"], shuffle=True, num_workers = NUM_WORKERS)
 
-#Training and Exporting the CNN model
+# Training and Exporting the CNN model
 model = cnn_model.MyCnnModel()
 device = modelling_config.get_default_device()
 modelling_config.model_prep_and_summary(model, device)
