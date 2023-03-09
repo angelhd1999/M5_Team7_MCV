@@ -79,15 +79,15 @@ criterion = modelling_config.default_loss()
 optimizer = modelling_config.default_optimizer(model = model, learning_rate = config["learning_rate"])
 num_epochs = config["epochs"]
 
-# get training results
+# Training the model and getting the training and validation plots & results
 trained_model, train_result_dict = cnn_model.train_model(model, device, train_loader, val_loader, criterion, optimizer, num_epochs)
 cnn_model.visualize_training(train_result_dict)
 
-#saving the model and report for further use
+# Saving the model and report for further use
 save_model_with_timestamp(trained_model, MODEL_SAVE_LOC)
 save_csv_with_timestamp(train_result_dict, REPORT_SAVE_LOC)
 
-#Testing the model
+# Testing the model
 trained_model_list = os.listdir(MODEL_SAVE_LOC)
 MODEL_10_EPOCH_PATH = os.path.join(MODEL_SAVE_LOC, trained_model_list[0])
 MODEL_10_EPOCH = cnn_model.MyCnnModel()
@@ -95,7 +95,7 @@ device = cnn_model.get_default_device()
 print(MODEL_10_EPOCH_PATH)
 MODEL_10_EPOCH.load_state_dict(torch.load(MODEL_10_EPOCH_PATH))
 
-# check accuracy on test set
+# Check accuracy on test set
 y_pred, y_true = cnn_model.infer(model = MODEL_10_EPOCH, device = device, data_loader = test_loader)
 confusion_matrix, class_metrics, overall_metrics = calculate_model_performance(y_pred, y_true, class_names = class_names)
 

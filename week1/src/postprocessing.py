@@ -102,11 +102,22 @@ def generate_fp_cost_matrix(confusion_matrix):
     return cost_matrix
 
 def get_current_timestamp():
+    """
+    It takes the current time and returns it in a format that is easy to use in a file name
+    :return: A string with the current date and time.
+    """
     now = datetime.datetime.now()
     return now.strftime("%Y%m%d_%H%M%S")
 
 
 def save_model_with_timestamp(model, filepath = MODEL_SAVE_LOC):
+    """
+    It takes a model and saves it to a filepath with a timestamp
+    
+    :param model: the model to be saved
+    :param filepath: the directory where you want to save the model
+    :return: The model is being saved to the filepath.
+    """
     filename = get_current_timestamp() + '_cnn_model' + '.pt'
     filepath = os.path.join(filepath, filename)
     torch.save(model.state_dict(), filepath)
@@ -114,6 +125,14 @@ def save_model_with_timestamp(model, filepath = MODEL_SAVE_LOC):
 
 
 def save_csv_with_timestamp(train_result_dict, filepath = MODEL_SAVE_LOC):
+    """
+    It takes a dictionary of training results, converts it to a pandas dataframe, and saves it to a csv
+    file with a timestamp in the filename
+    
+    :param train_result_dict: a dictionary of the training results
+    :param filepath: the path to the directory where you want to save the file
+    :return: the print statement.
+    """
     filename = get_current_timestamp() + '_training_report' + '.csv'
     filepath = os.path.join(filepath, filename)
     df = pd.DataFrame(train_result_dict)
