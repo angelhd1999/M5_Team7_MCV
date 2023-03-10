@@ -139,7 +139,7 @@ def train_model(model, device, train_loader, val_loader, criterion, optimizer, n
         train_result_dict['accuracy'].append(train_accuracy)
         train_result_dict['val_accuracy'].append(val_accuracy)
         train_result_dict['time'].append(epoch_time)
-        wandb.log({"train_loss":train_loss_result, "acc":train_accuracy, "val_loss": val_loss_result, "val_acc": val_accuracy}, step=i)
+        wandb.log({"train_loss":train_loss_result, "acc":train_accuracy, "val_loss": val_loss_result, "val_acc": val_accuracy}, step=epoch)
         print(f'''Epoch {epoch+1} 
             \t Training Loss: {train_loss_result} 
             \t Validation Loss: {val_loss_result} 

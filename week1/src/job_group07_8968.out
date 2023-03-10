@@ -1,0 +1,132 @@
+True
+True
+['Opencountry', 'coast', 'forest', 'highway', 'inside_city', 'mountain', 'street', 'tallbuilding']
+[(4, 'inside_city'), (2, 'forest'), (0, 'Opencountry'), (6, 'street'), (5, 'mountain'), (3, 'highway'), (1, 'coast'), (7, 'tallbuilding')]
+[(4, 'inside_city'), (2, 'forest'), (0, 'Opencountry'), (6, 'street'), (5, 'mountain'), (3, 'highway'), (1, 'coast'), (7, 'tallbuilding')]
+1504 377
+Train set size:  1504
+Validation set size:  377
+Test set size:  807
+Current device: cuda
+Is Model on CUDA: True
+----------------------------------------------------------------
+        Layer (type)               Output Shape         Param #
+================================================================
+            Conv2d-1         [-1, 32, 224, 224]             896
+         MaxPool2d-2         [-1, 32, 112, 112]               0
+            Conv2d-3         [-1, 32, 224, 224]           1,056
+         MaxPool2d-4         [-1, 32, 112, 112]               0
+            Conv2d-5         [-1, 64, 112, 112]          18,496
+         MaxPool2d-6           [-1, 64, 56, 56]               0
+            Conv2d-7         [-1, 64, 112, 112]           4,160
+         MaxPool2d-8           [-1, 64, 56, 56]               0
+            Conv2d-9          [-1, 128, 56, 56]          73,856
+        MaxPool2d-10          [-1, 128, 28, 28]               0
+AdaptiveAvgPool2d-11            [-1, 128, 1, 1]               0
+           Linear-12                  [-1, 256]          33,024
+           Linear-13                    [-1, 8]           2,056
+================================================================
+Total params: 133,544
+Trainable params: 133,544
+Non-trainable params: 0
+----------------------------------------------------------------
+Input size (MB): 0.57
+Forward/backward pass size (MB): 49.77
+Params size (MB): 0.51
+Estimated Total Size (MB): 50.85
+----------------------------------------------------------------
+Epoch 1 
+            	 Training Loss: 1.992 
+            	 Validation Loss: 1.829 
+            	 Epoch Train Accuracy (%): 21.28
+            	 Epoch Validation Accuracy (%): 24.14 
+            	 Epoch Time (s): 6.3
+        
+Epoch 2 
+            	 Training Loss: 1.746 
+            	 Validation Loss: 1.593 
+            	 Epoch Train Accuracy (%): 31.58
+            	 Epoch Validation Accuracy (%): 35.81 
+            	 Epoch Time (s): 6.3
+        
+Epoch 3 
+            	 Training Loss: 1.556 
+            	 Validation Loss: 1.459 
+            	 Epoch Train Accuracy (%): 40.16
+            	 Epoch Validation Accuracy (%): 42.71 
+            	 Epoch Time (s): 6.4
+        
+Epoch 4 
+            	 Training Loss: 1.395 
+            	 Validation Loss: 1.377 
+            	 Epoch Train Accuracy (%): 46.61
+            	 Epoch Validation Accuracy (%): 48.01 
+            	 Epoch Time (s): 6.4
+        
+Epoch 5 
+            	 Training Loss: 1.316 
+            	 Validation Loss: 1.25 
+            	 Epoch Train Accuracy (%): 50.0
+            	 Epoch Validation Accuracy (%): 52.25 
+            	 Epoch Time (s): 6.2
+        
+Epoch 6 
+            	 Training Loss: 1.246 
+            	 Validation Loss: 1.201 
+            	 Epoch Train Accuracy (%): 51.73
+            	 Epoch Validation Accuracy (%): 52.52 
+            	 Epoch Time (s): 6.3
+        
+Epoch 7 
+            	 Training Loss: 1.215 
+            	 Validation Loss: 1.18 
+            	 Epoch Train Accuracy (%): 53.06
+            	 Epoch Validation Accuracy (%): 53.85 
+            	 Epoch Time (s): 6.2
+        
+Epoch 8 
+            	 Training Loss: 1.121 
+            	 Validation Loss: 1.121 
+            	 Epoch Train Accuracy (%): 59.44
+            	 Epoch Validation Accuracy (%): 57.56 
+            	 Epoch Time (s): 6.3
+        
+Epoch 9 
+            	 Training Loss: 1.079 
+            	 Validation Loss: 1.014 
+            	 Epoch Train Accuracy (%): 58.64
+            	 Epoch Validation Accuracy (%): 62.07 
+            	 Epoch Time (s): 6.3
+        
+Epoch 10 
+            	 Training Loss: 1.003 
+            	 Validation Loss: 1.077 
+            	 Epoch Train Accuracy (%): 62.77
+            	 Epoch Validation Accuracy (%): 59.95 
+            	 Epoch Time (s): 6.3
+        
+Saved model to:  ../checkpoints/20230310_191918_cnn_model.pt
+Saved training report to:  ../report/20230310_191918_training_report.csv
+../checkpoints/20230310_191632_cnn_model.pt
+tensor([[ 93.,   8.,   7.,   3.,   1.,   8.,   0.,   0.],
+        [  6., 104.,   0.,   2.,   0.,   5.,   0.,   1.],
+        [ 11.,   0.,  93.,   2.,   1.,  10.,   2.,   2.],
+        [  1.,   2.,   0.,  65.,   0.,   0.,   1.,   1.],
+        [  0.,   0.,   0.,   1.,  84.,   0.,   7.,   7.],
+        [  7.,   2.,   1.,   1.,   0.,  90.,   0.,   1.],
+        [  0.,   0.,   0.,   1.,   7.,   0.,  69.,   2.],
+        [  0.,   0.,   0.,   1.,   1.,   1.,   1.,  94.]])
+              accuracy  precision  recall  f1_score
+Opencountry      0.936      0.775   0.788     0.782
+coast            0.968      0.881   0.897     0.889
+forest           0.955      0.769   0.921     0.838
+highway          0.980      0.929   0.855     0.890
+inside_city      0.969      0.848   0.894     0.870
+mountain         0.955      0.882   0.789     0.833
+street           0.974      0.873   0.862     0.868
+tallbuilding     0.978      0.959   0.870     0.913
+             overall
+accuracy       0.857
+f1_mirco       0.857
+f1_macro       0.860
+f1_weighted    0.858

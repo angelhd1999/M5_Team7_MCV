@@ -18,7 +18,7 @@ class MITDataset(torch.utils.data.Dataset):
         '''
         self.annot_df = annot_df
         # root directory of images, leave "" if using the image path column in the __getitem__ method
-        self.root_dir = "../MIT_split"
+        self.root_dir = "../../../mcv/datasets/MIT_split"
         self.transform = transform
 
     def __len__(self):

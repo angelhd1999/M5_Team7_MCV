@@ -47,7 +47,7 @@ config = {
     "learning_rate": 0.001
 }
 
-run = wandb.init(project="mit_cnn", reinit="True", config=config)
+run = wandb.init(project="M5_Group07", reinit="True", config=config)
 
 # Creating and Preprocessing input data
 train_df = build_annotation_dataframe(image_location=TRAIN_DATA_LOC, annot_location=ANNOT_LOC, output_csv_name='train.csv')
@@ -91,7 +91,7 @@ save_csv_with_timestamp(train_result_dict, REPORT_SAVE_LOC)
 trained_model_list = os.listdir(MODEL_SAVE_LOC)
 MODEL_10_EPOCH_PATH = os.path.join(MODEL_SAVE_LOC, trained_model_list[0])
 MODEL_10_EPOCH = cnn_model.MyCnnModel()
-device = cnn_model.get_default_device()
+device = modelling_config.get_default_device()
 print(MODEL_10_EPOCH_PATH)
 MODEL_10_EPOCH.load_state_dict(torch.load(MODEL_10_EPOCH_PATH))
 
