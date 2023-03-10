@@ -1,0 +1,9 @@
+wandb: Currently logged in as: adrisubi (mastercv). Use `wandb login --relogin` to force relogin
+wandb: Tracking run with wandb version 0.13.11
+wandb: Run data is saved locally in /export/home/group07/M5_Team7_MCV/week1/src/wandb/run-20230310_200611-wlc46ov4
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run hardy-planet-10
+wandb: ⭐️ View project at https://wandb.ai/mastercv/M5_Group07
+wandb: 🚀 View run at https://wandb.ai/mastercv/M5_Group07/runs/wlc46ov4
+/ghome/group07/anaconda3/lib/python3.7/site-packages/torchvision/transforms/transforms.py:330: UserWarning: Argument 'interpolation' of type int is deprecated since 0.13 and will be removed in 0.15. Please use InterpolationMode enum.
+  "Argument 'interpolation' of type int is deprecated since 0.13 and will be removed in 0.15. "

@@ -42,7 +42,7 @@ import wandb
 wandb.login()
 
 config = {
-    "epochs" : 10,
+    "epochs" : 150,
     "batch_size" : 16,
     "learning_rate": 0.001
 }
@@ -102,8 +102,3 @@ confusion_matrix, class_metrics, overall_metrics = calculate_model_performance(y
 print(confusion_matrix)
 print(class_metrics)
 print(overall_metrics)
-
-
-
-
-

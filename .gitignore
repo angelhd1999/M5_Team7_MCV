@@ -152,3 +152,4 @@ cython_debug/
 #.idea/
 
 week1/checkpoints/
+week1/wandb/
