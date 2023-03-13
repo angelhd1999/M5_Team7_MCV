@@ -10,7 +10,8 @@ Team 7 of the M5 at the Master in Computer Vision.
 ## Use guide
 1. Go to the desired week:
 ```
-cd weekX :: Where X is the week number
+:: Where N is the week number
+cd weekN
 ```
 2. (Optional) Create an environment.
 3. Install the requirements at the folder:
