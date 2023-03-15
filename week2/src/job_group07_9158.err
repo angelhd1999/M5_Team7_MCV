@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "run.py", line 20, in <module>
+    from detectron2 import model_zoo
+  File "/ghome/group07/anaconda3/lib/python3.7/site-packages/detectron2/model_zoo/__init__.py", line 7, in <module>
+    from .model_zoo import get, get_config_file, get_checkpoint_url
+  File "/ghome/group07/anaconda3/lib/python3.7/site-packages/detectron2/model_zoo/model_zoo.py", line 8, in <module>
+    from detectron2.modeling import build_model
+  File "/ghome/group07/anaconda3/lib/python3.7/site-packages/detectron2/modeling/__init__.py", line 2, in <module>
+    from detectron2.layers import ShapeSpec
+  File "/ghome/group07/anaconda3/lib/python3.7/site-packages/detectron2/layers/__init__.py", line 3, in <module>
+    from .deform_conv import DeformConv, ModulatedDeformConv
+  File "/ghome/group07/anaconda3/lib/python3.7/site-packages/detectron2/layers/deform_conv.py", line 10, in <module>
+    from detectron2 import _C
+ImportError: libcudart.so.10.0: cannot open shared object file: No such file or directory
