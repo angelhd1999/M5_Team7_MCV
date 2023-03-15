@@ -1,0 +1,1112 @@
+True
+True
+['Opencountry', 'coast', 'forest', 'highway', 'inside_city', 'mountain', 'street', 'tallbuilding']
+[(1, 'coast'), (3, 'highway'), (5, 'mountain'), (0, 'Opencountry'), (7, 'tallbuilding'), (6, 'street'), (2, 'forest'), (4, 'inside_city')]
+[(1, 'coast'), (3, 'highway'), (5, 'mountain'), (0, 'Opencountry'), (7, 'tallbuilding'), (6, 'street'), (2, 'forest'), (4, 'inside_city')]
+1504 377
+Train set size:  1504
+Validation set size:  377
+Test set size:  807
+Current device: cuda
+Is Model on CUDA: True
+----------------------------------------------------------------
+        Layer (type)               Output Shape         Param #
+================================================================
+            Conv2d-1         [-1, 32, 224, 224]             896
+         MaxPool2d-2         [-1, 32, 112, 112]               0
+            Conv2d-3         [-1, 32, 224, 224]           1,056
+         MaxPool2d-4         [-1, 32, 112, 112]               0
+            Conv2d-5         [-1, 64, 112, 112]          18,496
+         MaxPool2d-6           [-1, 64, 56, 56]               0
+            Conv2d-7         [-1, 64, 112, 112]           4,160
+         MaxPool2d-8           [-1, 64, 56, 56]               0
+            Conv2d-9          [-1, 128, 56, 56]          73,856
+        MaxPool2d-10          [-1, 128, 28, 28]               0
+AdaptiveAvgPool2d-11            [-1, 128, 1, 1]               0
+           Linear-12                  [-1, 256]          33,024
+           Linear-13                    [-1, 8]           2,056
+================================================================
+Total params: 133,544
+Trainable params: 133,544
+Non-trainable params: 0
+----------------------------------------------------------------
+Input size (MB): 0.57
+Forward/backward pass size (MB): 49.77
+Params size (MB): 0.51
+Estimated Total Size (MB): 50.85
+----------------------------------------------------------------
+Epoch 1 
+            	 Training Loss: 2.074 
+            	 Validation Loss: 2.068 
+            	 Epoch Train Accuracy (%): 16.49
+            	 Epoch Validation Accuracy (%): 18.57 
+            	 Epoch Time (s): 6.6
+        
+Epoch 2 
+            	 Training Loss: 2.056 
+            	 Validation Loss: 2.047 
+            	 Epoch Train Accuracy (%): 19.15
+            	 Epoch Validation Accuracy (%): 20.16 
+            	 Epoch Time (s): 6.6
+        
+Epoch 3 
+            	 Training Loss: 2.027 
+            	 Validation Loss: 2.014 
+            	 Epoch Train Accuracy (%): 22.14
+            	 Epoch Validation Accuracy (%): 25.99 
+            	 Epoch Time (s): 6.9
+        
+Epoch 4 
+            	 Training Loss: 2.019 
+            	 Validation Loss: 2.001 
+            	 Epoch Train Accuracy (%): 23.14
+            	 Epoch Validation Accuracy (%): 27.85 
+            	 Epoch Time (s): 7.2
+        
+Epoch 5 
+            	 Training Loss: 1.997 
+            	 Validation Loss: 1.99 
+            	 Epoch Train Accuracy (%): 27.19
+            	 Epoch Validation Accuracy (%): 28.65 
+            	 Epoch Time (s): 6.8
+        
+Epoch 6 
+            	 Training Loss: 1.999 
+            	 Validation Loss: 1.994 
+            	 Epoch Train Accuracy (%): 27.33
+            	 Epoch Validation Accuracy (%): 27.59 
+            	 Epoch Time (s): 6.0
+        
+Epoch 7 
+            	 Training Loss: 1.997 
+            	 Validation Loss: 1.997 
+            	 Epoch Train Accuracy (%): 28.06
+            	 Epoch Validation Accuracy (%): 26.53 
+            	 Epoch Time (s): 6.4
+        
+Epoch 8 
+            	 Training Loss: 1.988 
+            	 Validation Loss: 1.98 
+            	 Epoch Train Accuracy (%): 28.66
+            	 Epoch Validation Accuracy (%): 30.24 
+            	 Epoch Time (s): 7.0
+        
+Epoch 9 
+            	 Training Loss: 1.992 
+            	 Validation Loss: 1.976 
+            	 Epoch Train Accuracy (%): 27.39
+            	 Epoch Validation Accuracy (%): 27.32 
+            	 Epoch Time (s): 6.7
+        
+Epoch 10 
+            	 Training Loss: 1.987 
+            	 Validation Loss: 1.991 
+            	 Epoch Train Accuracy (%): 29.79
+            	 Epoch Validation Accuracy (%): 27.32 
+            	 Epoch Time (s): 6.2
+        
+Epoch 11 
+            	 Training Loss: 1.994 
+            	 Validation Loss: 1.976 
+            	 Epoch Train Accuracy (%): 26.8
+            	 Epoch Validation Accuracy (%): 31.56 
+            	 Epoch Time (s): 6.4
+        
+Epoch 12 
+            	 Training Loss: 1.985 
+            	 Validation Loss: 1.971 
+            	 Epoch Train Accuracy (%): 29.39
+            	 Epoch Validation Accuracy (%): 29.18 
+            	 Epoch Time (s): 6.1
+        
+Epoch 13 
+            	 Training Loss: 1.979 
+            	 Validation Loss: 1.967 
+            	 Epoch Train Accuracy (%): 32.18
+            	 Epoch Validation Accuracy (%): 34.22 
+            	 Epoch Time (s): 6.0
+        
+Epoch 14 
+            	 Training Loss: 1.977 
+            	 Validation Loss: 1.987 
+            	 Epoch Train Accuracy (%): 30.12
+            	 Epoch Validation Accuracy (%): 25.99 
+            	 Epoch Time (s): 5.8
+        
+Epoch 15 
+            	 Training Loss: 1.976 
+            	 Validation Loss: 1.981 
+            	 Epoch Train Accuracy (%): 32.25
+            	 Epoch Validation Accuracy (%): 30.77 
+            	 Epoch Time (s): 6.0
+        
+Epoch 16 
+            	 Training Loss: 1.978 
+            	 Validation Loss: 2.003 
+            	 Epoch Train Accuracy (%): 31.05
+            	 Epoch Validation Accuracy (%): 31.3 
+            	 Epoch Time (s): 6.0
+        
+Epoch 17 
+            	 Training Loss: 1.975 
+            	 Validation Loss: 1.987 
+            	 Epoch Train Accuracy (%): 32.91
+            	 Epoch Validation Accuracy (%): 27.59 
+            	 Epoch Time (s): 6.0
+        
+Epoch 18 
+            	 Training Loss: 1.981 
+            	 Validation Loss: 1.96 
+            	 Epoch Train Accuracy (%): 29.45
+            	 Epoch Validation Accuracy (%): 31.56 
+            	 Epoch Time (s): 5.9
+        
+Epoch 19 
+            	 Training Loss: 1.971 
+            	 Validation Loss: 1.967 
+            	 Epoch Train Accuracy (%): 31.18
+            	 Epoch Validation Accuracy (%): 30.24 
+            	 Epoch Time (s): 5.8
+        
+Epoch 20 
+            	 Training Loss: 1.968 
+            	 Validation Loss: 1.964 
+            	 Epoch Train Accuracy (%): 33.91
+            	 Epoch Validation Accuracy (%): 35.54 
+            	 Epoch Time (s): 6.5
+        
+Epoch 21 
+            	 Training Loss: 1.957 
+            	 Validation Loss: 1.947 
+            	 Epoch Train Accuracy (%): 35.31
+            	 Epoch Validation Accuracy (%): 33.95 
+            	 Epoch Time (s): 6.0
+        
+Epoch 22 
+            	 Training Loss: 1.956 
+            	 Validation Loss: 1.971 
+            	 Epoch Train Accuracy (%): 36.3
+            	 Epoch Validation Accuracy (%): 36.6 
+            	 Epoch Time (s): 5.8
+        
+Epoch 23 
+            	 Training Loss: 1.959 
+            	 Validation Loss: 1.985 
+            	 Epoch Train Accuracy (%): 35.7
+            	 Epoch Validation Accuracy (%): 31.83 
+            	 Epoch Time (s): 5.8
+        
+Epoch 24 
+            	 Training Loss: 1.943 
+            	 Validation Loss: 2.017 
+            	 Epoch Train Accuracy (%): 36.84
+            	 Epoch Validation Accuracy (%): 24.14 
+            	 Epoch Time (s): 6.0
+        
+Epoch 25 
+            	 Training Loss: 1.982 
+            	 Validation Loss: 1.951 
+            	 Epoch Train Accuracy (%): 31.12
+            	 Epoch Validation Accuracy (%): 34.48 
+            	 Epoch Time (s): 5.8
+        
+Epoch 26 
+            	 Training Loss: 1.946 
+            	 Validation Loss: 1.937 
+            	 Epoch Train Accuracy (%): 36.9
+            	 Epoch Validation Accuracy (%): 37.4 
+            	 Epoch Time (s): 5.9
+        
+Epoch 27 
+            	 Training Loss: 1.947 
+            	 Validation Loss: 1.955 
+            	 Epoch Train Accuracy (%): 38.03
+            	 Epoch Validation Accuracy (%): 36.6 
+            	 Epoch Time (s): 6.0
+        
+Epoch 28 
+            	 Training Loss: 1.938 
+            	 Validation Loss: 1.964 
+            	 Epoch Train Accuracy (%): 37.43
+            	 Epoch Validation Accuracy (%): 35.54 
+            	 Epoch Time (s): 5.9
+        
+Epoch 29 
+            	 Training Loss: 1.939 
+            	 Validation Loss: 1.939 
+            	 Epoch Train Accuracy (%): 37.77
+            	 Epoch Validation Accuracy (%): 35.28 
+            	 Epoch Time (s): 6.0
+        
+Epoch 30 
+            	 Training Loss: 1.923 
+            	 Validation Loss: 1.917 
+            	 Epoch Train Accuracy (%): 41.49
+            	 Epoch Validation Accuracy (%): 40.32 
+            	 Epoch Time (s): 6.2
+        
+Epoch 31 
+            	 Training Loss: 1.924 
+            	 Validation Loss: 1.907 
+            	 Epoch Train Accuracy (%): 40.69
+            	 Epoch Validation Accuracy (%): 38.99 
+            	 Epoch Time (s): 5.7
+        
+Epoch 32 
+            	 Training Loss: 1.922 
+            	 Validation Loss: 1.935 
+            	 Epoch Train Accuracy (%): 40.82
+            	 Epoch Validation Accuracy (%): 36.6 
+            	 Epoch Time (s): 5.8
+        
+Epoch 33 
+            	 Training Loss: 1.932 
+            	 Validation Loss: 1.936 
+            	 Epoch Train Accuracy (%): 39.23
+            	 Epoch Validation Accuracy (%): 36.07 
+            	 Epoch Time (s): 6.0
+        
+Epoch 34 
+            	 Training Loss: 1.915 
+            	 Validation Loss: 1.945 
+            	 Epoch Train Accuracy (%): 41.49
+            	 Epoch Validation Accuracy (%): 37.67 
+            	 Epoch Time (s): 6.2
+        
+Epoch 35 
+            	 Training Loss: 1.911 
+            	 Validation Loss: 1.932 
+            	 Epoch Train Accuracy (%): 41.89
+            	 Epoch Validation Accuracy (%): 37.14 
+            	 Epoch Time (s): 6.1
+        
+Epoch 36 
+            	 Training Loss: 1.907 
+            	 Validation Loss: 1.924 
+            	 Epoch Train Accuracy (%): 43.28
+            	 Epoch Validation Accuracy (%): 42.97 
+            	 Epoch Time (s): 6.0
+        
+Epoch 37 
+            	 Training Loss: 1.908 
+            	 Validation Loss: 1.894 
+            	 Epoch Train Accuracy (%): 41.89
+            	 Epoch Validation Accuracy (%): 44.83 
+            	 Epoch Time (s): 5.9
+        
+Epoch 38 
+            	 Training Loss: 1.919 
+            	 Validation Loss: 1.926 
+            	 Epoch Train Accuracy (%): 41.49
+            	 Epoch Validation Accuracy (%): 39.26 
+            	 Epoch Time (s): 6.3
+        
+Epoch 39 
+            	 Training Loss: 1.931 
+            	 Validation Loss: 2.008 
+            	 Epoch Train Accuracy (%): 37.83
+            	 Epoch Validation Accuracy (%): 26.26 
+            	 Epoch Time (s): 5.9
+        
+Epoch 40 
+            	 Training Loss: 1.92 
+            	 Validation Loss: 1.908 
+            	 Epoch Train Accuracy (%): 41.62
+            	 Epoch Validation Accuracy (%): 41.64 
+            	 Epoch Time (s): 6.6
+        
+Epoch 41 
+            	 Training Loss: 1.913 
+            	 Validation Loss: 1.907 
+            	 Epoch Train Accuracy (%): 42.62
+            	 Epoch Validation Accuracy (%): 40.85 
+            	 Epoch Time (s): 5.9
+        
+Epoch 42 
+            	 Training Loss: 1.905 
+            	 Validation Loss: 1.909 
+            	 Epoch Train Accuracy (%): 45.55
+            	 Epoch Validation Accuracy (%): 41.38 
+            	 Epoch Time (s): 5.9
+        
+Epoch 43 
+            	 Training Loss: 1.904 
+            	 Validation Loss: 1.913 
+            	 Epoch Train Accuracy (%): 43.28
+            	 Epoch Validation Accuracy (%): 40.85 
+            	 Epoch Time (s): 5.9
+        
+Epoch 44 
+            	 Training Loss: 1.932 
+            	 Validation Loss: 1.956 
+            	 Epoch Train Accuracy (%): 40.89
+            	 Epoch Validation Accuracy (%): 33.42 
+            	 Epoch Time (s): 7.0
+        
+Epoch 45 
+            	 Training Loss: 1.929 
+            	 Validation Loss: 1.943 
+            	 Epoch Train Accuracy (%): 40.76
+            	 Epoch Validation Accuracy (%): 34.75 
+            	 Epoch Time (s): 6.0
+        
+Epoch 46 
+            	 Training Loss: 1.909 
+            	 Validation Loss: 1.9 
+            	 Epoch Train Accuracy (%): 43.35
+            	 Epoch Validation Accuracy (%): 43.77 
+            	 Epoch Time (s): 6.0
+        
+Epoch 47 
+            	 Training Loss: 1.9 
+            	 Validation Loss: 1.891 
+            	 Epoch Train Accuracy (%): 43.68
+            	 Epoch Validation Accuracy (%): 43.5 
+            	 Epoch Time (s): 6.3
+        
+Epoch 48 
+            	 Training Loss: 1.889 
+            	 Validation Loss: 1.909 
+            	 Epoch Train Accuracy (%): 46.81
+            	 Epoch Validation Accuracy (%): 39.26 
+            	 Epoch Time (s): 6.0
+        
+Epoch 49 
+            	 Training Loss: 1.897 
+            	 Validation Loss: 1.888 
+            	 Epoch Train Accuracy (%): 46.21
+            	 Epoch Validation Accuracy (%): 45.36 
+            	 Epoch Time (s): 5.8
+        
+Epoch 50 
+            	 Training Loss: 1.886 
+            	 Validation Loss: 1.887 
+            	 Epoch Train Accuracy (%): 45.35
+            	 Epoch Validation Accuracy (%): 43.5 
+            	 Epoch Time (s): 6.0
+        
+Epoch 51 
+            	 Training Loss: 1.895 
+            	 Validation Loss: 1.9 
+            	 Epoch Train Accuracy (%): 45.88
+            	 Epoch Validation Accuracy (%): 44.56 
+            	 Epoch Time (s): 5.9
+        
+Epoch 52 
+            	 Training Loss: 1.882 
+            	 Validation Loss: 1.931 
+            	 Epoch Train Accuracy (%): 49.67
+            	 Epoch Validation Accuracy (%): 37.93 
+            	 Epoch Time (s): 6.0
+        
+Epoch 53 
+            	 Training Loss: 1.887 
+            	 Validation Loss: 1.914 
+            	 Epoch Train Accuracy (%): 46.28
+            	 Epoch Validation Accuracy (%): 39.79 
+            	 Epoch Time (s): 6.4
+        
+Epoch 54 
+            	 Training Loss: 1.888 
+            	 Validation Loss: 1.883 
+            	 Epoch Train Accuracy (%): 46.61
+            	 Epoch Validation Accuracy (%): 44.3 
+            	 Epoch Time (s): 6.7
+        
+Epoch 55 
+            	 Training Loss: 1.885 
+            	 Validation Loss: 1.873 
+            	 Epoch Train Accuracy (%): 47.14
+            	 Epoch Validation Accuracy (%): 49.34 
+            	 Epoch Time (s): 6.1
+        
+Epoch 56 
+            	 Training Loss: 1.87 
+            	 Validation Loss: 1.871 
+            	 Epoch Train Accuracy (%): 48.14
+            	 Epoch Validation Accuracy (%): 45.62 
+            	 Epoch Time (s): 6.4
+        
+Epoch 57 
+            	 Training Loss: 1.888 
+            	 Validation Loss: 1.875 
+            	 Epoch Train Accuracy (%): 47.07
+            	 Epoch Validation Accuracy (%): 48.54 
+            	 Epoch Time (s): 6.0
+        
+Epoch 58 
+            	 Training Loss: 1.874 
+            	 Validation Loss: 1.887 
+            	 Epoch Train Accuracy (%): 49.4
+            	 Epoch Validation Accuracy (%): 45.62 
+            	 Epoch Time (s): 5.9
+        
+Epoch 59 
+            	 Training Loss: 1.877 
+            	 Validation Loss: 1.865 
+            	 Epoch Train Accuracy (%): 47.07
+            	 Epoch Validation Accuracy (%): 48.54 
+            	 Epoch Time (s): 6.1
+        
+Epoch 60 
+            	 Training Loss: 1.871 
+            	 Validation Loss: 1.904 
+            	 Epoch Train Accuracy (%): 48.87
+            	 Epoch Validation Accuracy (%): 41.91 
+            	 Epoch Time (s): 6.7
+        
+Epoch 61 
+            	 Training Loss: 1.873 
+            	 Validation Loss: 1.898 
+            	 Epoch Train Accuracy (%): 48.8
+            	 Epoch Validation Accuracy (%): 44.83 
+            	 Epoch Time (s): 6.0
+        
+Epoch 62 
+            	 Training Loss: 1.888 
+            	 Validation Loss: 1.864 
+            	 Epoch Train Accuracy (%): 45.74
+            	 Epoch Validation Accuracy (%): 50.93 
+            	 Epoch Time (s): 6.0
+        
+Epoch 63 
+            	 Training Loss: 1.863 
+            	 Validation Loss: 1.874 
+            	 Epoch Train Accuracy (%): 48.54
+            	 Epoch Validation Accuracy (%): 46.42 
+            	 Epoch Time (s): 6.1
+        
+Epoch 64 
+            	 Training Loss: 1.87 
+            	 Validation Loss: 1.856 
+            	 Epoch Train Accuracy (%): 49.6
+            	 Epoch Validation Accuracy (%): 53.58 
+            	 Epoch Time (s): 5.9
+        
+Epoch 65 
+            	 Training Loss: 1.861 
+            	 Validation Loss: 1.892 
+            	 Epoch Train Accuracy (%): 50.47
+            	 Epoch Validation Accuracy (%): 45.62 
+            	 Epoch Time (s): 6.2
+        
+Epoch 66 
+            	 Training Loss: 1.857 
+            	 Validation Loss: 1.857 
+            	 Epoch Train Accuracy (%): 52.53
+            	 Epoch Validation Accuracy (%): 50.93 
+            	 Epoch Time (s): 6.1
+        
+Epoch 67 
+            	 Training Loss: 1.865 
+            	 Validation Loss: 1.84 
+            	 Epoch Train Accuracy (%): 50.4
+            	 Epoch Validation Accuracy (%): 51.99 
+            	 Epoch Time (s): 5.8
+        
+Epoch 68 
+            	 Training Loss: 1.858 
+            	 Validation Loss: 1.85 
+            	 Epoch Train Accuracy (%): 50.66
+            	 Epoch Validation Accuracy (%): 49.6 
+            	 Epoch Time (s): 6.0
+        
+Epoch 69 
+            	 Training Loss: 1.864 
+            	 Validation Loss: 1.875 
+            	 Epoch Train Accuracy (%): 50.4
+            	 Epoch Validation Accuracy (%): 45.36 
+            	 Epoch Time (s): 6.4
+        
+Epoch 70 
+            	 Training Loss: 1.848 
+            	 Validation Loss: 1.839 
+            	 Epoch Train Accuracy (%): 53.79
+            	 Epoch Validation Accuracy (%): 55.17 
+            	 Epoch Time (s): 6.1
+        
+Epoch 71 
+            	 Training Loss: 1.838 
+            	 Validation Loss: 1.84 
+            	 Epoch Train Accuracy (%): 56.12
+            	 Epoch Validation Accuracy (%): 51.46 
+            	 Epoch Time (s): 6.2
+        
+Epoch 72 
+            	 Training Loss: 1.843 
+            	 Validation Loss: 1.852 
+            	 Epoch Train Accuracy (%): 54.99
+            	 Epoch Validation Accuracy (%): 47.48 
+            	 Epoch Time (s): 6.0
+        
+Epoch 73 
+            	 Training Loss: 1.84 
+            	 Validation Loss: 1.854 
+            	 Epoch Train Accuracy (%): 55.59
+            	 Epoch Validation Accuracy (%): 53.58 
+            	 Epoch Time (s): 5.8
+        
+Epoch 74 
+            	 Training Loss: 1.835 
+            	 Validation Loss: 1.818 
+            	 Epoch Train Accuracy (%): 54.99
+            	 Epoch Validation Accuracy (%): 56.76 
+            	 Epoch Time (s): 6.3
+        
+Epoch 75 
+            	 Training Loss: 1.842 
+            	 Validation Loss: 1.846 
+            	 Epoch Train Accuracy (%): 55.45
+            	 Epoch Validation Accuracy (%): 53.05 
+            	 Epoch Time (s): 5.7
+        
+Epoch 76 
+            	 Training Loss: 1.834 
+            	 Validation Loss: 1.829 
+            	 Epoch Train Accuracy (%): 56.98
+            	 Epoch Validation Accuracy (%): 55.17 
+            	 Epoch Time (s): 6.5
+        
+Epoch 77 
+            	 Training Loss: 1.816 
+            	 Validation Loss: 1.821 
+            	 Epoch Train Accuracy (%): 59.11
+            	 Epoch Validation Accuracy (%): 56.76 
+            	 Epoch Time (s): 7.6
+        
+Epoch 78 
+            	 Training Loss: 1.826 
+            	 Validation Loss: 1.825 
+            	 Epoch Train Accuracy (%): 57.85
+            	 Epoch Validation Accuracy (%): 57.56 
+            	 Epoch Time (s): 8.2
+        
+Epoch 79 
+            	 Training Loss: 1.831 
+            	 Validation Loss: 1.845 
+            	 Epoch Train Accuracy (%): 57.18
+            	 Epoch Validation Accuracy (%): 56.76 
+            	 Epoch Time (s): 6.3
+        
+Epoch 80 
+            	 Training Loss: 1.822 
+            	 Validation Loss: 1.833 
+            	 Epoch Train Accuracy (%): 57.18
+            	 Epoch Validation Accuracy (%): 56.23 
+            	 Epoch Time (s): 6.8
+        
+Epoch 81 
+            	 Training Loss: 1.822 
+            	 Validation Loss: 1.832 
+            	 Epoch Train Accuracy (%): 57.85
+            	 Epoch Validation Accuracy (%): 54.91 
+            	 Epoch Time (s): 6.8
+        
+Epoch 82 
+            	 Training Loss: 1.823 
+            	 Validation Loss: 1.814 
+            	 Epoch Train Accuracy (%): 58.24
+            	 Epoch Validation Accuracy (%): 59.68 
+            	 Epoch Time (s): 7.0
+        
+Epoch 83 
+            	 Training Loss: 1.823 
+            	 Validation Loss: 1.808 
+            	 Epoch Train Accuracy (%): 57.58
+            	 Epoch Validation Accuracy (%): 60.48 
+            	 Epoch Time (s): 8.3
+        
+Epoch 84 
+            	 Training Loss: 1.813 
+            	 Validation Loss: 1.826 
+            	 Epoch Train Accuracy (%): 60.37
+            	 Epoch Validation Accuracy (%): 56.5 
+            	 Epoch Time (s): 6.2
+        
+Epoch 85 
+            	 Training Loss: 1.819 
+            	 Validation Loss: 1.825 
+            	 Epoch Train Accuracy (%): 57.71
+            	 Epoch Validation Accuracy (%): 56.5 
+            	 Epoch Time (s): 6.1
+        
+Epoch 86 
+            	 Training Loss: 1.806 
+            	 Validation Loss: 1.824 
+            	 Epoch Train Accuracy (%): 60.7
+            	 Epoch Validation Accuracy (%): 56.5 
+            	 Epoch Time (s): 6.5
+        
+Epoch 87 
+            	 Training Loss: 1.806 
+            	 Validation Loss: 1.815 
+            	 Epoch Train Accuracy (%): 60.7
+            	 Epoch Validation Accuracy (%): 56.5 
+            	 Epoch Time (s): 7.1
+        
+Epoch 88 
+            	 Training Loss: 1.814 
+            	 Validation Loss: 1.803 
+            	 Epoch Train Accuracy (%): 59.84
+            	 Epoch Validation Accuracy (%): 58.62 
+            	 Epoch Time (s): 6.2
+        
+Epoch 89 
+            	 Training Loss: 1.812 
+            	 Validation Loss: 1.808 
+            	 Epoch Train Accuracy (%): 59.64
+            	 Epoch Validation Accuracy (%): 58.09 
+            	 Epoch Time (s): 6.0
+        
+Epoch 90 
+            	 Training Loss: 1.81 
+            	 Validation Loss: 1.811 
+            	 Epoch Train Accuracy (%): 60.77
+            	 Epoch Validation Accuracy (%): 61.01 
+            	 Epoch Time (s): 5.9
+        
+Epoch 91 
+            	 Training Loss: 1.804 
+            	 Validation Loss: 1.822 
+            	 Epoch Train Accuracy (%): 62.1
+            	 Epoch Validation Accuracy (%): 54.38 
+            	 Epoch Time (s): 5.9
+        
+Epoch 92 
+            	 Training Loss: 1.817 
+            	 Validation Loss: 1.799 
+            	 Epoch Train Accuracy (%): 58.05
+            	 Epoch Validation Accuracy (%): 60.48 
+            	 Epoch Time (s): 6.2
+        
+Epoch 93 
+            	 Training Loss: 1.817 
+            	 Validation Loss: 1.821 
+            	 Epoch Train Accuracy (%): 57.98
+            	 Epoch Validation Accuracy (%): 60.21 
+            	 Epoch Time (s): 5.9
+        
+Epoch 94 
+            	 Training Loss: 1.81 
+            	 Validation Loss: 1.815 
+            	 Epoch Train Accuracy (%): 58.78
+            	 Epoch Validation Accuracy (%): 56.76 
+            	 Epoch Time (s): 5.8
+        
+Epoch 95 
+            	 Training Loss: 1.811 
+            	 Validation Loss: 1.809 
+            	 Epoch Train Accuracy (%): 59.91
+            	 Epoch Validation Accuracy (%): 58.89 
+            	 Epoch Time (s): 6.2
+        
+Epoch 96 
+            	 Training Loss: 1.817 
+            	 Validation Loss: 1.818 
+            	 Epoch Train Accuracy (%): 58.78
+            	 Epoch Validation Accuracy (%): 55.7 
+            	 Epoch Time (s): 5.9
+        
+Epoch 97 
+            	 Training Loss: 1.809 
+            	 Validation Loss: 1.822 
+            	 Epoch Train Accuracy (%): 59.84
+            	 Epoch Validation Accuracy (%): 56.76 
+            	 Epoch Time (s): 6.0
+        
+Epoch 98 
+            	 Training Loss: 1.805 
+            	 Validation Loss: 1.792 
+            	 Epoch Train Accuracy (%): 60.17
+            	 Epoch Validation Accuracy (%): 60.74 
+            	 Epoch Time (s): 6.5
+        
+Epoch 99 
+            	 Training Loss: 1.815 
+            	 Validation Loss: 1.808 
+            	 Epoch Train Accuracy (%): 59.24
+            	 Epoch Validation Accuracy (%): 57.56 
+            	 Epoch Time (s): 6.2
+        
+Epoch 100 
+            	 Training Loss: 1.802 
+            	 Validation Loss: 1.856 
+            	 Epoch Train Accuracy (%): 60.97
+            	 Epoch Validation Accuracy (%): 49.07 
+            	 Epoch Time (s): 5.9
+        
+Epoch 101 
+            	 Training Loss: 1.796 
+            	 Validation Loss: 1.808 
+            	 Epoch Train Accuracy (%): 63.03
+            	 Epoch Validation Accuracy (%): 57.29 
+            	 Epoch Time (s): 8.6
+        
+Epoch 102 
+            	 Training Loss: 1.817 
+            	 Validation Loss: 1.858 
+            	 Epoch Train Accuracy (%): 58.78
+            	 Epoch Validation Accuracy (%): 51.72 
+            	 Epoch Time (s): 7.7
+        
+Epoch 103 
+            	 Training Loss: 1.807 
+            	 Validation Loss: 1.816 
+            	 Epoch Train Accuracy (%): 59.57
+            	 Epoch Validation Accuracy (%): 60.48 
+            	 Epoch Time (s): 6.0
+        
+Epoch 104 
+            	 Training Loss: 1.798 
+            	 Validation Loss: 1.802 
+            	 Epoch Train Accuracy (%): 61.17
+            	 Epoch Validation Accuracy (%): 57.82 
+            	 Epoch Time (s): 6.2
+        
+Epoch 105 
+            	 Training Loss: 1.814 
+            	 Validation Loss: 1.814 
+            	 Epoch Train Accuracy (%): 59.04
+            	 Epoch Validation Accuracy (%): 59.68 
+            	 Epoch Time (s): 7.2
+        
+Epoch 106 
+            	 Training Loss: 1.805 
+            	 Validation Loss: 1.802 
+            	 Epoch Train Accuracy (%): 61.04
+            	 Epoch Validation Accuracy (%): 59.15 
+            	 Epoch Time (s): 6.4
+        
+Epoch 107 
+            	 Training Loss: 1.813 
+            	 Validation Loss: 1.799 
+            	 Epoch Train Accuracy (%): 59.24
+            	 Epoch Validation Accuracy (%): 60.21 
+            	 Epoch Time (s): 5.8
+        
+Epoch 108 
+            	 Training Loss: 1.805 
+            	 Validation Loss: 1.809 
+            	 Epoch Train Accuracy (%): 60.11
+            	 Epoch Validation Accuracy (%): 58.89 
+            	 Epoch Time (s): 6.3
+        
+Epoch 109 
+            	 Training Loss: 1.792 
+            	 Validation Loss: 1.806 
+            	 Epoch Train Accuracy (%): 63.03
+            	 Epoch Validation Accuracy (%): 60.21 
+            	 Epoch Time (s): 7.6
+        
+Epoch 110 
+            	 Training Loss: 1.803 
+            	 Validation Loss: 1.798 
+            	 Epoch Train Accuracy (%): 62.43
+            	 Epoch Validation Accuracy (%): 63.4 
+            	 Epoch Time (s): 6.9
+        
+Epoch 111 
+            	 Training Loss: 1.794 
+            	 Validation Loss: 1.797 
+            	 Epoch Train Accuracy (%): 62.63
+            	 Epoch Validation Accuracy (%): 60.21 
+            	 Epoch Time (s): 6.6
+        
+Epoch 112 
+            	 Training Loss: 1.794 
+            	 Validation Loss: 1.789 
+            	 Epoch Train Accuracy (%): 62.1
+            	 Epoch Validation Accuracy (%): 64.46 
+            	 Epoch Time (s): 8.0
+        
+Epoch 113 
+            	 Training Loss: 1.79 
+            	 Validation Loss: 1.804 
+            	 Epoch Train Accuracy (%): 64.16
+            	 Epoch Validation Accuracy (%): 60.21 
+            	 Epoch Time (s): 6.9
+        
+Epoch 114 
+            	 Training Loss: 1.789 
+            	 Validation Loss: 1.8 
+            	 Epoch Train Accuracy (%): 63.5
+            	 Epoch Validation Accuracy (%): 60.74 
+            	 Epoch Time (s): 7.5
+        
+Epoch 115 
+            	 Training Loss: 1.807 
+            	 Validation Loss: 1.819 
+            	 Epoch Train Accuracy (%): 62.5
+            	 Epoch Validation Accuracy (%): 58.09 
+            	 Epoch Time (s): 5.9
+        
+Epoch 116 
+            	 Training Loss: 1.785 
+            	 Validation Loss: 1.803 
+            	 Epoch Train Accuracy (%): 64.03
+            	 Epoch Validation Accuracy (%): 58.09 
+            	 Epoch Time (s): 6.6
+        
+Epoch 117 
+            	 Training Loss: 1.793 
+            	 Validation Loss: 1.79 
+            	 Epoch Train Accuracy (%): 61.7
+            	 Epoch Validation Accuracy (%): 63.13 
+            	 Epoch Time (s): 7.4
+        
+Epoch 118 
+            	 Training Loss: 1.801 
+            	 Validation Loss: 1.826 
+            	 Epoch Train Accuracy (%): 61.9
+            	 Epoch Validation Accuracy (%): 55.44 
+            	 Epoch Time (s): 6.1
+        
+Epoch 119 
+            	 Training Loss: 1.796 
+            	 Validation Loss: 1.799 
+            	 Epoch Train Accuracy (%): 62.37
+            	 Epoch Validation Accuracy (%): 60.74 
+            	 Epoch Time (s): 8.1
+        
+Epoch 120 
+            	 Training Loss: 1.799 
+            	 Validation Loss: 1.783 
+            	 Epoch Train Accuracy (%): 62.3
+            	 Epoch Validation Accuracy (%): 62.86 
+            	 Epoch Time (s): 8.6
+        
+Epoch 121 
+            	 Training Loss: 1.798 
+            	 Validation Loss: 1.796 
+            	 Epoch Train Accuracy (%): 61.04
+            	 Epoch Validation Accuracy (%): 61.27 
+            	 Epoch Time (s): 6.0
+        
+Epoch 122 
+            	 Training Loss: 1.789 
+            	 Validation Loss: 1.799 
+            	 Epoch Train Accuracy (%): 64.03
+            	 Epoch Validation Accuracy (%): 60.74 
+            	 Epoch Time (s): 6.5
+        
+Epoch 123 
+            	 Training Loss: 1.804 
+            	 Validation Loss: 1.81 
+            	 Epoch Train Accuracy (%): 62.63
+            	 Epoch Validation Accuracy (%): 59.95 
+            	 Epoch Time (s): 6.0
+        
+Epoch 124 
+            	 Training Loss: 1.78 
+            	 Validation Loss: 1.798 
+            	 Epoch Train Accuracy (%): 65.49
+            	 Epoch Validation Accuracy (%): 57.29 
+            	 Epoch Time (s): 6.0
+        
+Epoch 125 
+            	 Training Loss: 1.805 
+            	 Validation Loss: 1.789 
+            	 Epoch Train Accuracy (%): 60.77
+            	 Epoch Validation Accuracy (%): 60.48 
+            	 Epoch Time (s): 6.1
+        
+Epoch 126 
+            	 Training Loss: 1.788 
+            	 Validation Loss: 1.796 
+            	 Epoch Train Accuracy (%): 61.77
+            	 Epoch Validation Accuracy (%): 60.21 
+            	 Epoch Time (s): 5.9
+        
+Epoch 127 
+            	 Training Loss: 1.794 
+            	 Validation Loss: 1.819 
+            	 Epoch Train Accuracy (%): 62.7
+            	 Epoch Validation Accuracy (%): 59.68 
+            	 Epoch Time (s): 6.1
+        
+Epoch 128 
+            	 Training Loss: 1.791 
+            	 Validation Loss: 1.753 
+            	 Epoch Train Accuracy (%): 62.43
+            	 Epoch Validation Accuracy (%): 66.31 
+            	 Epoch Time (s): 6.0
+        
+Epoch 129 
+            	 Training Loss: 1.786 
+            	 Validation Loss: 1.811 
+            	 Epoch Train Accuracy (%): 62.83
+            	 Epoch Validation Accuracy (%): 60.74 
+            	 Epoch Time (s): 5.8
+        
+Epoch 130 
+            	 Training Loss: 1.787 
+            	 Validation Loss: 1.785 
+            	 Epoch Train Accuracy (%): 62.9
+            	 Epoch Validation Accuracy (%): 63.66 
+            	 Epoch Time (s): 6.1
+        
+Epoch 131 
+            	 Training Loss: 1.792 
+            	 Validation Loss: 1.793 
+            	 Epoch Train Accuracy (%): 63.5
+            	 Epoch Validation Accuracy (%): 62.6 
+            	 Epoch Time (s): 5.8
+        
+Epoch 132 
+            	 Training Loss: 1.787 
+            	 Validation Loss: 1.791 
+            	 Epoch Train Accuracy (%): 65.16
+            	 Epoch Validation Accuracy (%): 68.7 
+            	 Epoch Time (s): 6.0
+        
+Epoch 133 
+            	 Training Loss: 1.792 
+            	 Validation Loss: 1.785 
+            	 Epoch Train Accuracy (%): 63.3
+            	 Epoch Validation Accuracy (%): 60.21 
+            	 Epoch Time (s): 6.0
+        
+Epoch 134 
+            	 Training Loss: 1.784 
+            	 Validation Loss: 1.801 
+            	 Epoch Train Accuracy (%): 66.16
+            	 Epoch Validation Accuracy (%): 60.21 
+            	 Epoch Time (s): 6.1
+        
+Epoch 135 
+            	 Training Loss: 1.792 
+            	 Validation Loss: 1.825 
+            	 Epoch Train Accuracy (%): 62.9
+            	 Epoch Validation Accuracy (%): 56.5 
+            	 Epoch Time (s): 6.0
+        
+Epoch 136 
+            	 Training Loss: 1.786 
+            	 Validation Loss: 1.82 
+            	 Epoch Train Accuracy (%): 65.29
+            	 Epoch Validation Accuracy (%): 61.01 
+            	 Epoch Time (s): 5.8
+        
+Epoch 137 
+            	 Training Loss: 1.803 
+            	 Validation Loss: 1.78 
+            	 Epoch Train Accuracy (%): 61.57
+            	 Epoch Validation Accuracy (%): 65.52 
+            	 Epoch Time (s): 6.4
+        
+Epoch 138 
+            	 Training Loss: 1.788 
+            	 Validation Loss: 1.777 
+            	 Epoch Train Accuracy (%): 64.3
+            	 Epoch Validation Accuracy (%): 62.86 
+            	 Epoch Time (s): 6.2
+        
+Epoch 139 
+            	 Training Loss: 1.791 
+            	 Validation Loss: 1.818 
+            	 Epoch Train Accuracy (%): 63.76
+            	 Epoch Validation Accuracy (%): 58.89 
+            	 Epoch Time (s): 6.2
+        
+Epoch 140 
+            	 Training Loss: 1.786 
+            	 Validation Loss: 1.806 
+            	 Epoch Train Accuracy (%): 66.29
+            	 Epoch Validation Accuracy (%): 61.01 
+            	 Epoch Time (s): 6.2
+        
+Epoch 141 
+            	 Training Loss: 1.783 
+            	 Validation Loss: 1.796 
+            	 Epoch Train Accuracy (%): 64.23
+            	 Epoch Validation Accuracy (%): 63.4 
+            	 Epoch Time (s): 6.2
+        
+Epoch 142 
+            	 Training Loss: 1.784 
+            	 Validation Loss: 1.775 
+            	 Epoch Train Accuracy (%): 63.76
+            	 Epoch Validation Accuracy (%): 62.6 
+            	 Epoch Time (s): 6.2
+        
+Epoch 143 
+            	 Training Loss: 1.782 
+            	 Validation Loss: 1.781 
+            	 Epoch Train Accuracy (%): 64.56
+            	 Epoch Validation Accuracy (%): 61.27 
+            	 Epoch Time (s): 6.4
+        
+Epoch 144 
+            	 Training Loss: 1.78 
+            	 Validation Loss: 1.794 
+            	 Epoch Train Accuracy (%): 63.23
+            	 Epoch Validation Accuracy (%): 59.68 
+            	 Epoch Time (s): 5.8
+        
+Epoch 145 
+            	 Training Loss: 1.785 
+            	 Validation Loss: 1.799 
+            	 Epoch Train Accuracy (%): 64.69
+            	 Epoch Validation Accuracy (%): 60.74 
+            	 Epoch Time (s): 6.3
+        
+Epoch 146 
+            	 Training Loss: 1.785 
+            	 Validation Loss: 1.806 
+            	 Epoch Train Accuracy (%): 64.1
+            	 Epoch Validation Accuracy (%): 63.66 
+            	 Epoch Time (s): 6.0
+        
+Epoch 147 
+            	 Training Loss: 1.778 
+            	 Validation Loss: 1.777 
+            	 Epoch Train Accuracy (%): 63.9
+            	 Epoch Validation Accuracy (%): 64.46 
+            	 Epoch Time (s): 6.3
+        
+Epoch 148 
+            	 Training Loss: 1.777 
+            	 Validation Loss: 1.785 
+            	 Epoch Train Accuracy (%): 66.42
+            	 Epoch Validation Accuracy (%): 61.8 
+            	 Epoch Time (s): 6.4
+        
+Epoch 149 
+            	 Training Loss: 1.782 
+            	 Validation Loss: 1.793 
+            	 Epoch Train Accuracy (%): 64.1
+            	 Epoch Validation Accuracy (%): 61.54 
+            	 Epoch Time (s): 7.1
+        
+Epoch 150 
+            	 Training Loss: 1.775 
+            	 Validation Loss: 1.794 
+            	 Epoch Train Accuracy (%): 66.09
+            	 Epoch Validation Accuracy (%): 63.66 
+            	 Epoch Time (s): 6.9
+        
+Saved model to:  ../checkpoints/20230310_205639_cnn_model.pt
+Saved training report to:  ../report/20230310_205639_training_report.csv
+../checkpoints/20230310_205639_cnn_model.pt
+tensor([[72., 16., 29.,  2.,  0.,  9.,  1.,  3.],
+        [12., 64.,  0.,  6.,  0.,  8.,  0.,  0.],
+        [ 5.,  0., 66.,  1.,  2.,  4.,  1.,  2.],
+        [ 8., 22.,  0., 56.,  4., 11.,  5.,  1.],
+        [ 2.,  2.,  1.,  1., 63.,  0.,  8., 12.],
+        [11.,  9.,  4.,  3.,  2., 64.,  0.,  9.],
+        [ 3.,  0.,  1.,  4., 18.,  9., 61., 14.],
+        [ 5.,  3.,  0.,  3.,  5.,  9.,  4., 67.]])
+              accuracy  precision  recall  f1_score
+Opencountry      0.869      0.545   0.610     0.576
+coast            0.903      0.711   0.552     0.621
+forest           0.938      0.815   0.653     0.725
+highway          0.912      0.523   0.737     0.612
+inside_city      0.929      0.708   0.670     0.689
+mountain         0.891      0.627   0.561     0.593
+street           0.916      0.555   0.762     0.642
+tallbuilding     0.913      0.698   0.620     0.657
+             overall
+accuracy       0.636
+f1_mirco       0.636
+f1_macro       0.639
+f1_weighted    0.637
