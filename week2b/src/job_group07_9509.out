@@ -1,0 +1,33 @@
+Starting script
+Loading KITTI-MOTS dataset
+Registering KITTI-MOTS training dataset
+Registering KITTI-MOTS testing dataset
+Loading models and weights from FasterRCNN model
+Loading test images
+Running inference on 10 images
+Running inference on image ../../../mcv/datasets/KITTI-MOTS/testing/image_02/0000/000000.png
+Running inference on image ../../../mcv/datasets/KITTI-MOTS/testing/image_02/0000/000001.png
+Running inference on image ../../../mcv/datasets/KITTI-MOTS/testing/image_02/0000/000002.png
+Running inference on image ../../../mcv/datasets/KITTI-MOTS/testing/image_02/0000/000003.png
+Running inference on image ../../../mcv/datasets/KITTI-MOTS/testing/image_02/0000/000004.png
+Running inference on image ../../../mcv/datasets/KITTI-MOTS/testing/image_02/0000/000005.png
+Running inference on image ../../../mcv/datasets/KITTI-MOTS/testing/image_02/0000/000006.png
+Running inference on image ../../../mcv/datasets/KITTI-MOTS/testing/image_02/0000/000007.png
+Running inference on image ../../../mcv/datasets/KITTI-MOTS/testing/image_02/0000/000008.png
+Running inference on image ../../../mcv/datasets/KITTI-MOTS/testing/image_02/0000/000009.png
+Inference done
+Visualizing predictions
+Visualizing prediction 1/10: ../../../mcv/datasets/KITTI-MOTS/testing/image_02/0000/000000.png
+Visualizing prediction 2/10: ../../../mcv/datasets/KITTI-MOTS/testing/image_02/0000/000001.png
+Visualizing prediction 3/10: ../../../mcv/datasets/KITTI-MOTS/testing/image_02/0000/000002.png
+Visualizing prediction 4/10: ../../../mcv/datasets/KITTI-MOTS/testing/image_02/0000/000003.png
+Visualizing prediction 5/10: ../../../mcv/datasets/KITTI-MOTS/testing/image_02/0000/000004.png
+Visualizing prediction 6/10: ../../../mcv/datasets/KITTI-MOTS/testing/image_02/0000/000005.png
+Visualizing prediction 7/10: ../../../mcv/datasets/KITTI-MOTS/testing/image_02/0000/000006.png
+Visualizing prediction 8/10: ../../../mcv/datasets/KITTI-MOTS/testing/image_02/0000/000007.png
+Visualizing prediction 9/10: ../../../mcv/datasets/KITTI-MOTS/testing/image_02/0000/000008.png
+Visualizing prediction 10/10: ../../../mcv/datasets/KITTI-MOTS/testing/image_02/0000/000009.png
+Visualization done
+Evaluating predictions
+Loading 465 images from sequence 0000
+Loading 147 images from sequence 0001
