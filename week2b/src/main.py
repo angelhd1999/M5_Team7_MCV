@@ -1,6 +1,8 @@
 import os
 import glob
 import json
+import random
+import string
 from PIL import Image
 import cv2
 import numpy as np
@@ -71,21 +73,21 @@ for i in range(80):
 print("Starting script")
 
 # Enble CUDA
-print("Enabling CUDA")
-torch.cuda.set_device(0)
+#print("Enabling CUDA")
+#torch.cuda.set_device(0)
 
 def get_kitti_mots_dicts(data_path, mode, model):
-    # assert mode in ['training', 'testing'], "mode should be 'training' or 'testing'"
+    # assert mode in ['train_gen', 'val_gen'], "mode should be 'train_gen' or 'val_gen'"
     
     image_path = os.path.join(data_path, mode, 'image_02')
-    instance_path = os.path.join(data_path, 'instances')
+    # instance_path = os.path.join(data_path, 'instances') # ! Not used
     instance_txt_path = os.path.join(data_path, 'instances_txt' + '_' + mode)
 
     dataset_dicts = []
 
     for seq in sorted(os.listdir(image_path)):
         images = sorted(glob.glob(os.path.join(image_path, seq, '*.png')))
-        instances = sorted(glob.glob(os.path.join(instance_path, seq, '*.png')))
+        # instances = sorted(glob.glob(os.path.join(instance_path, seq, '*.png'))) # ! Not used
         instance_txt = os.path.join(instance_txt_path, seq + '.txt')
         
         # Log progress
@@ -94,25 +96,36 @@ def get_kitti_mots_dicts(data_path, mode, model):
         with open(instance_txt, 'r') as f:
             instance_data = f.readlines()
 
-        for idx, (img_path, inst_path) in enumerate(zip(images, instances)):
+        # for idx, (img_path, inst_path) in enumerate(zip(images, instances)): # ! Old line
+        for idx, img_path in enumerate(images):
             record = {}
-            img = Image.open(img_path)
-            width, height = img.size
 
             record["file_name"] = img_path
             record["image_id"] = idx
-            record["height"] = height
-            record["width"] = width
+
+            # Initializing height and width with None
+            in_height = None
+            in_width = None
             
             # Parse instance data
             objs = []
             for line in instance_data:
                 values = line.strip().split(' ')
-                frame_id, class_instance_ids, class_id_re, in_height, in_width, rle_encoding = values
+                frame_id, class_instance_ids, class_id_re, h, w, rle_encoding = values
                 
-                frame_id = int(frame_id)
-                in_height = int(in_height)
-                in_width = int(in_width)
+                if int(frame_id) != idx: # ? To not check unnecessary lines
+                    continue
+
+                h = int(h)
+                w = int(w)
+
+                # Set height and width only once
+                if in_height is None and in_width is None:
+                    in_height = h
+                    in_width = w
+                    record["height"] = in_height
+                    record["width"] = in_width
+                
                 # Parse class and instance id
                 class_id = int(class_instance_ids) // 1000
                 class_id_re = int(class_id_re) # ? It's redundant, but we'll keep it for now
@@ -125,7 +138,6 @@ def get_kitti_mots_dicts(data_path, mode, model):
                 if class_id_re > 2 or np.sum(binary_mask) == 0:
                     continue
                     
-                # print("Found object with class id " + str(class_id) + " and instance id " + str(instance_id) + " in frame " + str(frame_id))
                 # Compute the bounding box from the mask
                 y_indices, x_indices = np.where(binary_mask == 1)
                 bbox = [int(np.min(x_indices)), int(np.min(y_indices)), int(np.max(x_indices) - np.min(x_indices)), int(np.max(y_indices) - np.min(y_indices))]
@@ -155,16 +167,18 @@ def get_kitti_mots_dicts(data_path, mode, model):
 
 def setup_config_predef(model_name):
     cfg = get_cfg()
+    cfg.MODEL.DEVICE = "cuda"
     cfg.merge_from_file(model_zoo.get_config_file(model_name))
     cfg.MODEL.WEIGHTS = model_zoo.get_checkpoint_url(model_name)
     cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.5 # Set threshold for this model
     cfg.DATASETS.TEST = ("kitti_mots_testing",)
     cfg.MODEL.FP16_ENABLED = True # Enable mixed precision training for faster inference
-    cfg.MODEL.DEVICE='cuda'
+    cfg.MODEL.DEVICE="cuda"
     return cfg
 
 def setup_config_finetuning(model_name, train_dataset_name, val_dataset_name):
     cfg = get_cfg()
+    cfg.MODEL.DEVICE = "cuda"
     cfg.merge_from_file(model_zoo.get_config_file(model_name))
     cfg.MODEL.WEIGHTS = model_zoo.get_checkpoint_url(model_name)
     cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.5  # Set threshold for this model
@@ -174,7 +188,8 @@ def setup_config_finetuning(model_name, train_dataset_name, val_dataset_name):
     cfg.MODEL.FP16_ENABLED = True  # Enable mixed precision training for faster inference
     cfg.MODEL.ROI_HEADS.BATCH_SIZE_PER_IMAGE = 128  # You can adjust this value depending on your GPU memory
     cfg.MODEL.ROI_HEADS.NUM_CLASSES = 2  # Number of classes in KITTI-MOTS dataset (excluding the ignore class)
-    cfg.MODEL.DEVICE='cuda'
+    cfg.MODEL.DEVICE="cuda"
+
 
     # Set up the training parameters
     cfg.SOLVER.IMS_PER_BATCH = 4
@@ -184,7 +199,6 @@ def setup_config_finetuning(model_name, train_dataset_name, val_dataset_name):
     cfg.SOLVER.GAMMA = 0.05
     cfg.SOLVER.CHECKPOINT_PERIOD = 500  # Save a checkpoint every 500 iterations
     cfg.TEST.EVAL_PERIOD = 500  # Evaluate the model every 500 iterations
-
 
     return cfg
 
@@ -241,6 +255,18 @@ elif MODEL == 'MaskRCNN':
 else:
     raise ValueError("MODEL should be 'MaskRCNN' or 'FasterRCNN'")
 
+# Defining the output of the model
+pool = string.ascii_letters + string.digits # Define the pool of characters to choose from
+random_string = ''.join(random.choice(pool) for i in range(6)) # Generate a random string of length 6
+if FINETUNING:
+    finetuning_str = "finetuned"
+else:
+    finetuning_str = "pretrained"
+
+# Create a directory to store the output of the model
+cfg_output_dir = f"./output_{MODEL}_{finetuning_str}_{random_string}"
+os.makedirs(cfg_output_dir, exist_ok=True)
+cfg.OUTPUT_DIR = cfg_output_dir
 
 if FINETUNING:
     # Create a DefaultTrainer
@@ -273,7 +299,9 @@ print("Visualization done")
 
 print("Evaluating predictions")
 evaluator = COCOEvaluator("kitti_mots_val_gen", cfg, False, output_dir="./output/")
+print('Evaluator created')
 val_loader = build_detection_test_loader(cfg, "kitti_mots_val_gen", num_workers=N_WORKERS)
+print('Validation loader created')
 evaluation_results = inference_on_dataset(predictor.model, val_loader, evaluator)
 print("Evaluation done")
 

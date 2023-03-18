@@ -1,0 +1,4 @@
+/ghome/group07/miniconda3/envs/m5/lib/python3.7/site-packages/torch/functional.py:445: UserWarning: torch.meshgrid: in an upcoming release, it will be required to pass the indexing argument. (Triggered internally at  ../aten/src/ATen/native/TensorShape.cpp:2157.)
+  return _VF.meshgrid(tensors, **kwargs)  # type: ignore[attr-defined]
+COCO Evaluator instantiated using config, this is deprecated behavior. Please pass in explicit arguments instead.
+slurmstepd: error: *** JOB 9763 ON dcc3090 CANCELLED AT 2023-03-18T21:21:52 ***

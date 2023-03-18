@@ -1,0 +1,12 @@
+Parameters:
+DATASET_PATH: ../../../KITTI-MOTS
+MODEL: FasterRCNN
+FINETUNING: False
+N_IMAGES_TEST: 20
+IMAGES_TEST_START: 0
+N_WORKERS: 8
+Starting script
+Loading KITTI-MOTS dataset
+Registering KITTI-MOTS train_gen dataset
+Registering KITTI-MOTS val_gen dataset
+Loading models and weights from FasterRCNN model

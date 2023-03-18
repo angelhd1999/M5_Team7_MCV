@@ -1,0 +1,13 @@
+/ghome/group07/miniconda3/envs/m5/lib/python3.7/site-packages/torch/functional.py:445: UserWarning: torch.meshgrid: in an upcoming release, it will be required to pass the indexing argument. (Triggered internally at  ../aten/src/ATen/native/TensorShape.cpp:2157.)
+  return _VF.meshgrid(tensors, **kwargs)  # type: ignore[attr-defined]
+COCO Evaluator instantiated using config, this is deprecated behavior. Please pass in explicit arguments instead.
+Traceback (most recent call last):
+  File "main.py", line 301, in <module>
+    evaluator = COCOEvaluator("kitti_mots_val_gen", cfg, False, output_dir="./output/")
+  File "/export/home/group07/M5_Team7_MCV/detectron2/detectron2/evaluation/coco_evaluation.py", line 142, in __init__
+    convert_to_coco_json(dataset_name, cache_path, allow_cached=allow_cached_coco)
+  File "/export/home/group07/M5_Team7_MCV/detectron2/detectron2/data/datasets/coco.py", line 470, in convert_to_coco_json
+    coco_dict = convert_to_coco_dict(dataset_name)
+  File "/export/home/group07/M5_Team7_MCV/detectron2/detectron2/data/datasets/coco.py", line 348, in convert_to_coco_dict
+    "width": int(image_dict["width"]),
+KeyError: 'width'

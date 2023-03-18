@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/export/home/group07/M5_Team7_MCV/week2b/src/main.py", line 5, in <module>
+    import cv2
+ModuleNotFoundError: No module named 'cv2'
