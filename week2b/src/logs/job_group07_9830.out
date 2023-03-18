@@ -1,0 +1,61 @@
+Parameters:
+DATASET_PATH: ../../../KITTI-MOTS
+MODEL: FasterRCNN
+FINETUNING: False
+N_IMAGES_TEST: 20
+IMAGES_TEST_START: 0
+N_WORKERS: 4
+Starting script
+Loading KITTI-MOTS dataset
+Registering KITTI-MOTS train_gen dataset
+Registering KITTI-MOTS val_gen dataset
+Loading models and weights from FasterRCNN model
+Loading test images
+Running inference on images 0 to 19
+Running inference on 20 images
+Running inference on image ../../../KITTI-MOTS/testing/image_02/0000/000000.png
+Running inference on image ../../../KITTI-MOTS/testing/image_02/0000/000001.png
+Running inference on image ../../../KITTI-MOTS/testing/image_02/0000/000002.png
+Running inference on image ../../../KITTI-MOTS/testing/image_02/0000/000003.png
+Running inference on image ../../../KITTI-MOTS/testing/image_02/0000/000004.png
+Running inference on image ../../../KITTI-MOTS/testing/image_02/0000/000005.png
+Running inference on image ../../../KITTI-MOTS/testing/image_02/0000/000006.png
+Running inference on image ../../../KITTI-MOTS/testing/image_02/0000/000007.png
+Running inference on image ../../../KITTI-MOTS/testing/image_02/0000/000008.png
+Running inference on image ../../../KITTI-MOTS/testing/image_02/0000/000009.png
+Running inference on image ../../../KITTI-MOTS/testing/image_02/0000/000010.png
+Running inference on image ../../../KITTI-MOTS/testing/image_02/0000/000011.png
+Running inference on image ../../../KITTI-MOTS/testing/image_02/0000/000012.png
+Running inference on image ../../../KITTI-MOTS/testing/image_02/0000/000013.png
+Running inference on image ../../../KITTI-MOTS/testing/image_02/0000/000014.png
+Running inference on image ../../../KITTI-MOTS/testing/image_02/0000/000015.png
+Running inference on image ../../../KITTI-MOTS/testing/image_02/0000/000016.png
+Running inference on image ../../../KITTI-MOTS/testing/image_02/0000/000017.png
+Running inference on image ../../../KITTI-MOTS/testing/image_02/0000/000018.png
+Running inference on image ../../../KITTI-MOTS/testing/image_02/0000/000019.png
+Inference done
+Visualizing predictions
+Visualizing prediction 1/20: ../../../KITTI-MOTS/testing/image_02/0000/000000.png
+Visualizing prediction 2/20: ../../../KITTI-MOTS/testing/image_02/0000/000001.png
+Visualizing prediction 3/20: ../../../KITTI-MOTS/testing/image_02/0000/000002.png
+Visualizing prediction 4/20: ../../../KITTI-MOTS/testing/image_02/0000/000003.png
+Visualizing prediction 5/20: ../../../KITTI-MOTS/testing/image_02/0000/000004.png
+Visualizing prediction 6/20: ../../../KITTI-MOTS/testing/image_02/0000/000005.png
+Visualizing prediction 7/20: ../../../KITTI-MOTS/testing/image_02/0000/000006.png
+Visualizing prediction 8/20: ../../../KITTI-MOTS/testing/image_02/0000/000007.png
+Visualizing prediction 9/20: ../../../KITTI-MOTS/testing/image_02/0000/000008.png
+Visualizing prediction 10/20: ../../../KITTI-MOTS/testing/image_02/0000/000009.png
+Visualizing prediction 11/20: ../../../KITTI-MOTS/testing/image_02/0000/000010.png
+Visualizing prediction 12/20: ../../../KITTI-MOTS/testing/image_02/0000/000011.png
+Visualizing prediction 13/20: ../../../KITTI-MOTS/testing/image_02/0000/000012.png
+Visualizing prediction 14/20: ../../../KITTI-MOTS/testing/image_02/0000/000013.png
+Visualizing prediction 15/20: ../../../KITTI-MOTS/testing/image_02/0000/000014.png
+Visualizing prediction 16/20: ../../../KITTI-MOTS/testing/image_02/0000/000015.png
+Visualizing prediction 17/20: ../../../KITTI-MOTS/testing/image_02/0000/000016.png
+Visualizing prediction 18/20: ../../../KITTI-MOTS/testing/image_02/0000/000017.png
+Visualizing prediction 19/20: ../../../KITTI-MOTS/testing/image_02/0000/000018.png
+Visualizing prediction 20/20: ../../../KITTI-MOTS/testing/image_02/0000/000019.png
+Visualization done
+Evaluating predictions
+Evaluator created
+Loading 233 images from sequence 0002

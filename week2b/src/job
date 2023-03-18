@@ -12,4 +12,4 @@
 # python -u main.py --model FasterRCNN --n_images_test 20 --finetuning
 # python -u main.py --model MaskRCNN --n_images_test 20 --finetuning
 # ? To run it: sbatch --output=logs/%x_%u_%j.out --error=logs/%x_%u_%j.err job
-python -u main.py --model FasterRCNN --n_images_test 20
+python -u main.py --model MaskRCNN --n_images_test 20

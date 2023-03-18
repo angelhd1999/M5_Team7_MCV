@@ -1,0 +1,103 @@
+Parameters:
+DATASET_PATH: ../../../KITTI-MOTS
+MODEL: FasterRCNN
+FINETUNING: False
+N_IMAGES_TEST: 20
+IMAGES_TEST_START: 0
+N_WORKERS: 4
+Starting script
+Loading KITTI-MOTS dataset
+Registering KITTI-MOTS train_gen dataset
+Registering KITTI-MOTS val_gen dataset
+Loading models and weights from FasterRCNN model
+Loading test images
+Running inference on images 0 to 19
+Running inference on 20 images
+Running inference on image ../../../KITTI-MOTS/testing/image_02/0000/000000.png
+Running inference on image ../../../KITTI-MOTS/testing/image_02/0000/000001.png
+Running inference on image ../../../KITTI-MOTS/testing/image_02/0000/000002.png
+Running inference on image ../../../KITTI-MOTS/testing/image_02/0000/000003.png
+Running inference on image ../../../KITTI-MOTS/testing/image_02/0000/000004.png
+Running inference on image ../../../KITTI-MOTS/testing/image_02/0000/000005.png
+Running inference on image ../../../KITTI-MOTS/testing/image_02/0000/000006.png
+Running inference on image ../../../KITTI-MOTS/testing/image_02/0000/000007.png
+Running inference on image ../../../KITTI-MOTS/testing/image_02/0000/000008.png
+Running inference on image ../../../KITTI-MOTS/testing/image_02/0000/000009.png
+Running inference on image ../../../KITTI-MOTS/testing/image_02/0000/000010.png
+Running inference on image ../../../KITTI-MOTS/testing/image_02/0000/000011.png
+Running inference on image ../../../KITTI-MOTS/testing/image_02/0000/000012.png
+Running inference on image ../../../KITTI-MOTS/testing/image_02/0000/000013.png
+Running inference on image ../../../KITTI-MOTS/testing/image_02/0000/000014.png
+Running inference on image ../../../KITTI-MOTS/testing/image_02/0000/000015.png
+Running inference on image ../../../KITTI-MOTS/testing/image_02/0000/000016.png
+Running inference on image ../../../KITTI-MOTS/testing/image_02/0000/000017.png
+Running inference on image ../../../KITTI-MOTS/testing/image_02/0000/000018.png
+Running inference on image ../../../KITTI-MOTS/testing/image_02/0000/000019.png
+Inference done
+Visualizing predictions
+Visualizing prediction 1/20: ../../../KITTI-MOTS/testing/image_02/0000/000000.png
+Visualizing prediction 2/20: ../../../KITTI-MOTS/testing/image_02/0000/000001.png
+Visualizing prediction 3/20: ../../../KITTI-MOTS/testing/image_02/0000/000002.png
+Visualizing prediction 4/20: ../../../KITTI-MOTS/testing/image_02/0000/000003.png
+Visualizing prediction 5/20: ../../../KITTI-MOTS/testing/image_02/0000/000004.png
+Visualizing prediction 6/20: ../../../KITTI-MOTS/testing/image_02/0000/000005.png
+Visualizing prediction 7/20: ../../../KITTI-MOTS/testing/image_02/0000/000006.png
+Visualizing prediction 8/20: ../../../KITTI-MOTS/testing/image_02/0000/000007.png
+Visualizing prediction 9/20: ../../../KITTI-MOTS/testing/image_02/0000/000008.png
+Visualizing prediction 10/20: ../../../KITTI-MOTS/testing/image_02/0000/000009.png
+Visualizing prediction 11/20: ../../../KITTI-MOTS/testing/image_02/0000/000010.png
+Visualizing prediction 12/20: ../../../KITTI-MOTS/testing/image_02/0000/000011.png
+Visualizing prediction 13/20: ../../../KITTI-MOTS/testing/image_02/0000/000012.png
+Visualizing prediction 14/20: ../../../KITTI-MOTS/testing/image_02/0000/000013.png
+Visualizing prediction 15/20: ../../../KITTI-MOTS/testing/image_02/0000/000014.png
+Visualizing prediction 16/20: ../../../KITTI-MOTS/testing/image_02/0000/000015.png
+Visualizing prediction 17/20: ../../../KITTI-MOTS/testing/image_02/0000/000016.png
+Visualizing prediction 18/20: ../../../KITTI-MOTS/testing/image_02/0000/000017.png
+Visualizing prediction 19/20: ../../../KITTI-MOTS/testing/image_02/0000/000018.png
+Visualizing prediction 20/20: ../../../KITTI-MOTS/testing/image_02/0000/000019.png
+Visualization done
+Evaluating predictions
+Loading 233 images from sequence 0002
+Loading 270 images from sequence 0006
+Loading 800 images from sequence 0007
+Loading 390 images from sequence 0008
+Loading 294 images from sequence 0010
+Loading 340 images from sequence 0013
+Loading 106 images from sequence 0014
+Loading 209 images from sequence 0016
+Loading 339 images from sequence 0018
+Evaluator created
+Loading 233 images from sequence 0002
+Loading 270 images from sequence 0006
+Loading 800 images from sequence 0007
+Loading 390 images from sequence 0008
+Loading 294 images from sequence 0010
+Loading 340 images from sequence 0013
+Loading 106 images from sequence 0014
+Loading 209 images from sequence 0016
+Loading 339 images from sequence 0018
+Validation loader created
+Loading and preparing results...
+DONE (t=0.11s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *bbox*
+DONE (t=7.17s).
+Accumulating evaluation results...
+DONE (t=0.26s).
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.580
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets=100 ] = 0.808
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets=100 ] = 0.655
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.318
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.630
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.738
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=  1 ] = 0.077
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 10 ] = 0.487
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.684
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.498
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.725
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.822
+Evaluation done
+Evaluation Results:
+bbox: {'AP': 57.95022272400673, 'AP50': 80.84665807123598, 'AP75': 65.53175411029393, 'APs': 31.788924297771004, 'APm': 63.00414278951125, 'APl': 73.7884369078087, 'AP-Car': 45.95122595875487, 'AP-Pedestrian': nan, 'AP-Ignore': 69.94921948925857}

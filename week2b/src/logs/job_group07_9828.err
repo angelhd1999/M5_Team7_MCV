@@ -1,0 +1,36 @@
+/ghome/group07/miniconda3/envs/m5/lib/python3.7/site-packages/torch/functional.py:445: UserWarning: torch.meshgrid: in an upcoming release, it will be required to pass the indexing argument. (Triggered internally at  ../aten/src/ATen/native/TensorShape.cpp:2157.)
+  return _VF.meshgrid(tensors, **kwargs)  # type: ignore[attr-defined]
+COCO Evaluator instantiated using config, this is deprecated behavior. Please pass in explicit arguments instead.
+/ghome/group07/miniconda3/envs/m5/lib/python3.7/site-packages/torch/utils/data/dataloader.py:481: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  cpuset_checked))
+Traceback (most recent call last):
+  File "main.py", line 307, in <module>
+    evaluation_results = inference_on_dataset(predictor.model, val_loader, evaluator)
+  File "/export/home/group07/M5_Team7_MCV/detectron2/detectron2/evaluation/evaluator.py", line 149, in inference_on_dataset
+    for idx, inputs in enumerate(data_loader):
+  File "/ghome/group07/miniconda3/envs/m5/lib/python3.7/site-packages/torch/utils/data/dataloader.py", line 521, in __next__
+    data = self._next_data()
+  File "/ghome/group07/miniconda3/envs/m5/lib/python3.7/site-packages/torch/utils/data/dataloader.py", line 1203, in _next_data
+    return self._process_data(data)
+  File "/ghome/group07/miniconda3/envs/m5/lib/python3.7/site-packages/torch/utils/data/dataloader.py", line 1229, in _process_data
+    data.reraise()
+  File "/ghome/group07/miniconda3/envs/m5/lib/python3.7/site-packages/torch/_utils.py", line 434, in reraise
+    raise exception
+detectron2.data.detection_utils.SizeMismatchError: Caught SizeMismatchError in DataLoader worker process 7.
+Original Traceback (most recent call last):
+  File "/ghome/group07/miniconda3/envs/m5/lib/python3.7/site-packages/torch/utils/data/_utils/worker.py", line 287, in _worker_loop
+    data = fetcher.fetch(index)
+  File "/ghome/group07/miniconda3/envs/m5/lib/python3.7/site-packages/torch/utils/data/_utils/fetch.py", line 49, in fetch
+    data = [self.dataset[idx] for idx in possibly_batched_index]
+  File "/ghome/group07/miniconda3/envs/m5/lib/python3.7/site-packages/torch/utils/data/_utils/fetch.py", line 49, in <listcomp>
+    data = [self.dataset[idx] for idx in possibly_batched_index]
+  File "/export/home/group07/M5_Team7_MCV/detectron2/detectron2/data/common.py", line 95, in __getitem__
+    data = self._map_func(self._dataset[cur_idx])
+  File "/export/home/group07/M5_Team7_MCV/detectron2/detectron2/utils/serialize.py", line 26, in __call__
+    return self._obj(*args, **kwargs)
+  File "/export/home/group07/M5_Team7_MCV/detectron2/detectron2/data/dataset_mapper.py", line 155, in __call__
+    utils.check_image_size(dataset_dict, image)
+  File "/export/home/group07/M5_Team7_MCV/detectron2/detectron2/data/detection_utils.py", line 204, in check_image_size
+    + " Please check the width/height in your annotation."
+detectron2.data.detection_utils.SizeMismatchError: Mismatched image shape for image ../../../KITTI-MOTS/val_gen/image_02/0014/000000.png, got (1224, 370), expect (1242, 375). Please check the width/height in your annotation.
+

@@ -31,7 +31,7 @@ def parse_arguments():
                         help="Start index for test images")
     parser.add_argument("--n_images_test", default=10, type=int,
                         help="Number of test images to use for inference and visualization")
-    parser.add_argument("--n_workers", default=8, type=int,
+    parser.add_argument("--n_workers", default=4, type=int,
                         help="Number of workers to use for data loading")
 
     return parser.parse_args()
@@ -54,9 +54,16 @@ print(f"N_IMAGES_TEST: {N_IMAGES_TEST}")
 print(f"IMAGES_TEST_START: {IMAGES_TEST_START}")
 print(f"N_WORKERS: {N_WORKERS}")
 
+# Previous mapping from KITTI-MOTS to COCO classes
+# class_mapping_k_to_c = {  # Mapping KITTI-MOTS class indices to COCO class indices
+#     1: 2, # KITTI-MOTS class 1 is "car" when read, so we map it to COCO class 2
+#     2: 1 # KITTI-MOTS class 2 is "person" when read, so we map it to COCO class 1
+# }
+
+# New mapping from KITTI-MOTS to COCO classes
 class_mapping_k_to_c = {  # Mapping KITTI-MOTS class indices to COCO class indices
     1: 2, # KITTI-MOTS class 1 is "car" when read, so we map it to COCO class 2
-    2: 1 # KITTI-MOTS class 2 is "person" when read, so we map it to COCO class 1
+    2: 0 # KITTI-MOTS class 2 is "person" when read, so we map it to COCO class 1
 }
 
 class_mapping_c_to_k = {  # Mapping COCO class indices to KITTI-MOTS class indices
@@ -104,8 +111,11 @@ def get_kitti_mots_dicts(data_path, mode, model):
             record["image_id"] = idx
 
             # Initializing height and width with None
-            in_height = None
-            in_width = None
+            in_height = 375 # None
+            in_width = 1242 # None
+            record["height"] = in_height
+            record["width"] = in_width
+            default_size = True
             
             # Parse instance data
             objs = []
@@ -119,12 +129,14 @@ def get_kitti_mots_dicts(data_path, mode, model):
                 h = int(h)
                 w = int(w)
 
-                # Set height and width only once
-                if in_height is None and in_width is None:
+                # Set height and width only once 
+                # if in_height is None and in_width is None: # ! This is never occuring now
+                if default_size:
                     in_height = h
                     in_width = w
                     record["height"] = in_height
                     record["width"] = in_width
+                    default_size = False
                 
                 # Parse class and instance id
                 class_id = int(class_instance_ids) // 1000
@@ -158,6 +170,9 @@ def get_kitti_mots_dicts(data_path, mode, model):
                     shape = [s for x in shape for s in x]
                     obj["segmentation"] = shape
 
+            # If there are no objects in the image, we skip it
+            if len(objs) == 0:
+                continue
             record["annotations"] = objs
             # record["sem_seg_file_name"] = inst_path # ? Not sure if we need this
             dataset_dicts.append(record)
