@@ -1,0 +1,24 @@
+/ghome/group07/anaconda3/envs/m5/lib/python3.10/site-packages/torch/functional.py:504: UserWarning: torch.meshgrid: in an upcoming release, it will be required to pass the indexing argument. (Triggered internally at ../aten/src/ATen/native/TensorShape.cpp:3190.)
+  return _VF.meshgrid(tensors, **kwargs)  # type: ignore[attr-defined]
+Traceback (most recent call last):
+  File "/export/home/group07/M5_Team7_MCV/week2b/src/main.py", line 128, in <module>
+    mask_rcnn_predictions = run_inference(mask_rcnn_predictor, test_image_list)
+  File "/export/home/group07/M5_Team7_MCV/week2b/src/main.py", line 102, in run_inference
+    outputs = predictor(img)
+  File "/ghome/group07/anaconda3/envs/m5/lib/python3.10/site-packages/detectron2/engine/defaults.py", line 321, in __call__
+    predictions = self.model([inputs])[0]
+  File "/ghome/group07/anaconda3/envs/m5/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1194, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/ghome/group07/anaconda3/envs/m5/lib/python3.10/site-packages/detectron2/modeling/meta_arch/rcnn.py", line 151, in forward
+    return self.inference(batched_inputs)
+  File "/ghome/group07/anaconda3/envs/m5/lib/python3.10/site-packages/detectron2/modeling/meta_arch/rcnn.py", line 205, in inference
+    features = self.backbone(images.tensor)
+  File "/ghome/group07/anaconda3/envs/m5/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1194, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/ghome/group07/anaconda3/envs/m5/lib/python3.10/site-packages/detectron2/modeling/backbone/fpn.py", line 163, in forward
+    results.insert(0, output_conv(prev_features))
+  File "/ghome/group07/anaconda3/envs/m5/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1194, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/ghome/group07/anaconda3/envs/m5/lib/python3.10/site-packages/detectron2/layers/wrappers.py", line 128, in forward
+    x = F.conv2d(
+torch.cuda.OutOfMemoryError: CUDA out of memory. Tried to allocate 36.00 MiB (GPU 0; 23.69 GiB total capacity; 21.63 GiB already allocated; 10.94 MiB free; 22.02 GiB reserved in total by PyTorch) If reserved memory is >> allocated memory try setting max_split_size_mb to avoid fragmentation.  See documentation for Memory Management and PYTORCH_CUDA_ALLOC_CONF

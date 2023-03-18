@@ -1,0 +1,19 @@
+/ghome/group07/anaconda3/envs/m5/lib/python3.10/site-packages/torch/functional.py:504: UserWarning: torch.meshgrid: in an upcoming release, it will be required to pass the indexing argument. (Triggered internally at ../aten/src/ATen/native/TensorShape.cpp:3190.)
+  return _VF.meshgrid(tensors, **kwargs)  # type: ignore[attr-defined]
+COCO Evaluator instantiated using config, this is deprecated behavior. Please pass in explicit arguments instead.
+Traceback (most recent call last):
+  File "/export/home/group07/M5_Team7_MCV/week2b/src/main.py", line 184, in <module>
+    evaluator = COCOEvaluator("kitti_mots_testing", cfg, False, output_dir="./output/")
+  File "/ghome/group07/anaconda3/envs/m5/lib/python3.10/site-packages/detectron2/evaluation/coco_evaluation.py", line 143, in __init__
+    convert_to_coco_json(dataset_name, cache_path, allow_cached=allow_cached_coco)
+  File "/ghome/group07/anaconda3/envs/m5/lib/python3.10/site-packages/detectron2/data/datasets/coco.py", line 481, in convert_to_coco_json
+    coco_dict = convert_to_coco_dict(dataset_name)
+  File "/ghome/group07/anaconda3/envs/m5/lib/python3.10/site-packages/detectron2/data/datasets/coco.py", line 332, in convert_to_coco_dict
+    dataset_dicts = DatasetCatalog.get(dataset_name)
+  File "/ghome/group07/anaconda3/envs/m5/lib/python3.10/site-packages/detectron2/data/catalog.py", line 58, in get
+    return f()
+  File "/export/home/group07/M5_Team7_MCV/week2b/src/main.py", line 155, in <lambda>
+    DatasetCatalog.register("kitti_mots_" + d, lambda d=d: get_kitti_mots_dicts(DATASET_PATH, d) )
+  File "/export/home/group07/M5_Team7_MCV/week2b/src/main.py", line 56, in get_kitti_mots_dicts
+    with open(instance_txt, 'r') as f:
+FileNotFoundError: [Errno 2] No such file or directory: '../../../mcv/datasets/KITTI-MOTS/instances_txt/0021.txt'

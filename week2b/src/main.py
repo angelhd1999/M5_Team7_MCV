@@ -25,6 +25,8 @@ def parse_arguments():
                         help="Model to use: 'MaskRCNN' or 'FasterRCNN'")
     parser.add_argument("--finetuning", action="store_true",
                         help="Enable fine-tuning of the model (provide --finetuning flag)")
+    parser.add_argument("--images_test_start", type=int, default=0, 
+                        help="Start index for test images")
     parser.add_argument("--n_images_test", default=10, type=int,
                         help="Number of test images to use for inference and visualization")
     parser.add_argument("--n_workers", default=8, type=int,
@@ -38,6 +40,7 @@ DATASET_PATH = args.dataset_path
 MODEL = args.model
 FINETUNING = args.finetuning
 N_IMAGES_TEST = args.n_images_test
+IMAGES_TEST_START = args.images_test_start
 N_WORKERS = args.n_workers
 
 # Log the parameters (arguments)
@@ -46,6 +49,7 @@ print(f"DATASET_PATH: {DATASET_PATH}")
 print(f"MODEL: {MODEL}")
 print(f"FINETUNING: {FINETUNING}")
 print(f"N_IMAGES_TEST: {N_IMAGES_TEST}")
+print(f"IMAGES_TEST_START: {IMAGES_TEST_START}")
 print(f"N_WORKERS: {N_WORKERS}")
 
 class_mapping_k_to_c = {  # Mapping KITTI-MOTS class indices to COCO class indices
@@ -251,7 +255,13 @@ predictor = DefaultPredictor(cfg)
 
 print("Loading test images")
 test_image_list = sorted(glob.glob(DATASET_PATH + '/testing/image_02/*/*.png'))
-shortened_test_image_list = test_image_list[:N_IMAGES_TEST]
+
+# Calculate start and end indices for the images you want to process
+images_test_end = min(IMAGES_TEST_START + N_IMAGES_TEST, len(test_image_list))
+
+shortened_test_image_list = test_image_list[IMAGES_TEST_START:images_test_end]
+
+print(f"Running inference on images {IMAGES_TEST_START} to {images_test_end-1}")
 
 print("Running inference on " + str(len(shortened_test_image_list)) + " images")
 predictions = run_inference(predictor, shortened_test_image_list)

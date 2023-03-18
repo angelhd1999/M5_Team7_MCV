@@ -1,0 +1,33 @@
+Starting script
+Enabling CUDA
+Loading KITTI-MOTS dataset
+Registering KITTI-MOTS train_gen dataset
+Registering KITTI-MOTS val_gen dataset
+Loading models and weights from MaskRCNN model
+Loading test images
+Running inference on 10 images
+Running inference on image ../../../KITTI-MOTS/testing/image_02/0000/000000.png
+Running inference on image ../../../KITTI-MOTS/testing/image_02/0000/000001.png
+Running inference on image ../../../KITTI-MOTS/testing/image_02/0000/000002.png
+Running inference on image ../../../KITTI-MOTS/testing/image_02/0000/000003.png
+Running inference on image ../../../KITTI-MOTS/testing/image_02/0000/000004.png
+Running inference on image ../../../KITTI-MOTS/testing/image_02/0000/000005.png
+Running inference on image ../../../KITTI-MOTS/testing/image_02/0000/000006.png
+Running inference on image ../../../KITTI-MOTS/testing/image_02/0000/000007.png
+Running inference on image ../../../KITTI-MOTS/testing/image_02/0000/000008.png
+Running inference on image ../../../KITTI-MOTS/testing/image_02/0000/000009.png
+Inference done
+Visualizing predictions
+Visualizing prediction 1/10: ../../../KITTI-MOTS/testing/image_02/0000/000000.png
+Visualizing prediction 2/10: ../../../KITTI-MOTS/testing/image_02/0000/000001.png
+Visualizing prediction 3/10: ../../../KITTI-MOTS/testing/image_02/0000/000002.png
+Visualizing prediction 4/10: ../../../KITTI-MOTS/testing/image_02/0000/000003.png
+Visualizing prediction 5/10: ../../../KITTI-MOTS/testing/image_02/0000/000004.png
+Visualizing prediction 6/10: ../../../KITTI-MOTS/testing/image_02/0000/000005.png
+Visualizing prediction 7/10: ../../../KITTI-MOTS/testing/image_02/0000/000006.png
+Visualizing prediction 8/10: ../../../KITTI-MOTS/testing/image_02/0000/000007.png
+Visualizing prediction 9/10: ../../../KITTI-MOTS/testing/image_02/0000/000008.png
+Visualizing prediction 10/10: ../../../KITTI-MOTS/testing/image_02/0000/000009.png
+Visualization done
+Evaluating predictions
+Loading 233 images from sequence 0002
