@@ -14,11 +14,39 @@ from detectron2.config import get_cfg
 from detectron2.structures.boxes import BoxMode
 from detectron2.utils.visualizer import Visualizer
 
-DATASET_PATH = '../../../KITTI-MOTS'
-MODEL = 'FasterRCNN' # 'MaskRCNN' or 'FasterRCNN'
-FINETUNING = True
-N_IMAGES_TEST = 10
-N_WORKERS = 8
+import argparse
+
+def parse_arguments():
+    parser = argparse.ArgumentParser(description="KITTI-MOTS Fine-tuning and Evaluation")
+
+    parser.add_argument("--dataset_path", default="../../../KITTI-MOTS", type=str,
+                        help="Path to the KITTI-MOTS dataset")
+    parser.add_argument("--model", default="FasterRCNN", type=str, choices=['MaskRCNN', 'FasterRCNN'],
+                        help="Model to use: 'MaskRCNN' or 'FasterRCNN'")
+    parser.add_argument("--finetuning", action="store_true",
+                        help="Enable fine-tuning of the model (provide --finetuning flag)")
+    parser.add_argument("--n_images_test", default=10, type=int,
+                        help="Number of test images to use for inference and visualization")
+    parser.add_argument("--n_workers", default=8, type=int,
+                        help="Number of workers to use for data loading")
+
+    return parser.parse_args()
+
+args = parse_arguments()
+
+DATASET_PATH = args.dataset_path
+MODEL = args.model
+FINETUNING = args.finetuning
+N_IMAGES_TEST = args.n_images_test
+N_WORKERS = args.n_workers
+
+# Log the parameters (arguments)
+print("Parameters:")
+print(f"DATASET_PATH: {DATASET_PATH}")
+print(f"MODEL: {MODEL}")
+print(f"FINETUNING: {FINETUNING}")
+print(f"N_IMAGES_TEST: {N_IMAGES_TEST}")
+print(f"N_WORKERS: {N_WORKERS}")
 
 class_mapping_k_to_c = {  # Mapping KITTI-MOTS class indices to COCO class indices
     1: 2, # KITTI-MOTS class 1 is "car" when read, so we map it to COCO class 2

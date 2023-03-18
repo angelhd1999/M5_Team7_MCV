@@ -6,4 +6,4 @@
 #SBATCH -o %x_%u_%j.out # File to which STDOUT will be written
 #SBATCH -e %x_%u_%j.err # File to which STDERR will be written
 #-u is for unbuffered output, so that you can see the output of your program
-python -u main.py
+python -u main.py --model FasterRCNN --n_images_test 20
