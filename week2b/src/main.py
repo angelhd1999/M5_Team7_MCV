@@ -27,6 +27,8 @@ def parse_arguments():
                         help="Model to use: 'MaskRCNN' or 'FasterRCNN'")
     parser.add_argument("--finetuning", action="store_true",
                         help="Enable fine-tuning of the model (provide --finetuning flag)")
+    parser.add_argument("--finetuning_path", default="", type=str,
+                        help="Path to the finetuned weights")
     parser.add_argument("--images_test_start", type=int, default=0, 
                         help="Start index for test images")
     parser.add_argument("--n_images_test", default=10, type=int,
@@ -41,6 +43,7 @@ args = parse_arguments()
 DATASET_PATH = args.dataset_path
 MODEL = args.model
 FINETUNING = args.finetuning
+FINETUNING_PATH = args.finetuning_path
 N_IMAGES_TEST = args.n_images_test
 IMAGES_TEST_START = args.images_test_start
 N_WORKERS = args.n_workers
@@ -50,6 +53,7 @@ print("Parameters:")
 print(f"DATASET_PATH: {DATASET_PATH}")
 print(f"MODEL: {MODEL}")
 print(f"FINETUNING: {FINETUNING}")
+print(f"FINETUNING_PATH: {FINETUNING_PATH}")
 print(f"N_IMAGES_TEST: {N_IMAGES_TEST}")
 print(f"IMAGES_TEST_START: {IMAGES_TEST_START}")
 print(f"N_WORKERS: {N_WORKERS}")
@@ -149,15 +153,16 @@ def get_kitti_mots_dicts(data_path, mode, model):
                 rle = {'size': [h, w], 'counts': rle_encoding}
                 binary_mask = cocomask.decode(rle)
 
-                if class_id_re > 2 or np.sum(binary_mask) == 0:
+                if class_id not in class_mapping_k_to_c:
+                    continue
+                # Map class id to COCO class id
+                class_id = class_mapping_k_to_c[class_id]
+                if np.sum(binary_mask) == 0:
                     continue
                     
                 # Compute the bounding box from the mask
                 y, x = np.where(binary_mask == 1)
                 bbox = [int(np.min(x)), int(np.min(y)), int(np.max(x) - np.min(x)), int(np.max(y) - np.min(y))]
-                
-                # Map class id to COCO class id
-                class_id = class_mapping_k_to_c[class_id]
 
                 obj = {
                     "bbox": bbox,
@@ -168,9 +173,6 @@ def get_kitti_mots_dicts(data_path, mode, model):
                 if (model == 'MaskRCNN'):
                     shape = [(int(x), int(y)) for x, y in zip(x, y)]
                     shape = [s for x in shape for s in x]
-                    # Discard if the shape is not a polygon
-                    # if len(shape) % 2 != 0 or len(shape) < 6:
-                    #     continue
                     obj["segmentation"] = [shape]
 
                 objs.append(obj)
@@ -214,11 +216,11 @@ def setup_config_finetuning(model_name, train_dataset_name, val_dataset_name):
     # Set up the training parameters
     cfg.SOLVER.IMS_PER_BATCH = 4
     cfg.SOLVER.BASE_LR = 0.001
-    cfg.SOLVER.MAX_ITER = 1000  # You can adjust the number of iterations based on your needs
+    cfg.SOLVER.MAX_ITER = 10000 # Prev: 1000 # You can adjust the number of iterations based on your needs
     cfg.SOLVER.STEPS = []  # Do not decay learning rate
     cfg.SOLVER.GAMMA = 0.05
     cfg.SOLVER.CHECKPOINT_PERIOD = 500  # Save a checkpoint every 500 iterations
-    cfg.TEST.EVAL_PERIOD = 500  # Evaluate the model every 500 iterations
+    cfg.TEST.EVAL_PERIOD = 100  # Evaluate the model every 500 iterations
 
     return cfg
 
@@ -283,19 +285,22 @@ if FINETUNING:
 else:
     finetuning_str = "pretrained"
 
-# Create a directory to store the output of the model
-cfg_output_dir = f"./output_{MODEL}_{finetuning_str}_{random_string}"
-os.makedirs(cfg_output_dir, exist_ok=True)
-cfg.OUTPUT_DIR = cfg_output_dir
-
 if FINETUNING:
-    # Create a DefaultTrainer
-    trainer = DefaultTrainer(cfg)
-    trainer.resume_or_load(resume=False)
+    if FINETUNING_PATH != "":
+        cfg.MODEL.WEIGHTS = os.path.join(FINETUNING_PATH, f"model_final.pth")
+    else:
+        # Create a directory to store the output of the model
+        cfg_output_dir = f"./output_{MODEL}_{finetuning_str}_{random_string}"
+        os.makedirs(cfg_output_dir, exist_ok=True)
+        cfg.OUTPUT_DIR = cfg_output_dir
 
-    # Train the model
-    trainer.train()
-    cfg.MODEL.WEIGHTS = os.path.join(cfg.OUTPUT_DIR, "model_final.pth")
+        # Create a DefaultTrainer
+        trainer = DefaultTrainer(cfg)
+        trainer.resume_or_load(resume=False)
+
+        # Train the model
+        trainer.train()
+        cfg.MODEL.WEIGHTS = os.path.join(cfg.OUTPUT_DIR, f"model_final.pth")
 
 predictor = DefaultPredictor(cfg)
 
