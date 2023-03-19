@@ -58,23 +58,29 @@ print(f"N_IMAGES_TEST: {N_IMAGES_TEST}")
 print(f"IMAGES_TEST_START: {IMAGES_TEST_START}")
 print(f"N_WORKERS: {N_WORKERS}")
 
-# Previous mapping from KITTI-MOTS to COCO classes
+# Previous mapping from KITTI-MOTS to COCO classes -> nan on Cars
 # class_mapping_k_to_c = {  # Mapping KITTI-MOTS class indices to COCO class indices
 #     1: 2, # KITTI-MOTS class 1 is "car" when read, so we map it to COCO class 2
 #     2: 1 # KITTI-MOTS class 2 is "person" when read, so we map it to COCO class 1
 # }
 
-# New mapping from KITTI-MOTS to COCO classes
-class_mapping_k_to_c = {  # Mapping KITTI-MOTS class indices to COCO class indices
-    1: 2, # KITTI-MOTS class 1 is "car" when read, so we map it to COCO class 2
-    2: 0 # KITTI-MOTS class 2 is "person" when read, so we map it to COCO class 1
-}
+if FINETUNING:
+    # New mapping from KITTI-MOTS to COCO classes -> nan on Pedestrians
+    class_mapping_k_to_c = {  # Mapping KITTI-MOTS class indices to COCO class indices
+        1: 0, # KITTI-MOTS class 1 is "car" when read, so we map it to COCO class 2
+        2: 1 # KITTI-MOTS class 2 is "person" when read, so we map it to COCO class 1
+    }
+else:
+    class_mapping_k_to_c = {  # Mapping KITTI-MOTS class indices to COCO class indices
+        1: 2, # KITTI-MOTS class 1 is "car" when read, so we map it to COCO class 2
+        2: 0 # KITTI-MOTS class 2 is "person" when read, so we map it to COCO class 1
+    }
 
 class_mapping_c_to_k = {  # Mapping COCO class indices to KITTI-MOTS class indices
-    2: 0, # COCO class 2 is "car" so we map it to KITTI-MOTS class 0 (defined at thing_classes)
-    1: 1 # COCO class 1 is "person" so we map it to KITTI-MOTS class 1 (defined at thing_classes)
+    2: 2, # COCO class 2 is "car" so we map it to KITTI-MOTS class 0 (defined at thing_classes)
+    0: 0 # COCO class 1 is "person" so we map it to KITTI-MOTS class 1 (defined at thing_classes)
 } 
-ignore_class = 2
+ignore_class = 1
 
 # Add all other COCO classes to the mapping dictionary as an "Ignore" class
 for i in range(80):
@@ -258,7 +264,7 @@ print("Loading KITTI-MOTS dataset")
 for d in ["train_gen", "val_gen"]:
     print("Registering KITTI-MOTS " + d + " dataset")
     DatasetCatalog.register("kitti_mots_" + d, lambda d=d: get_kitti_mots_dicts(DATASET_PATH, d, MODEL) )
-    MetadataCatalog.get("kitti_mots_" + d).set(thing_classes=["Car", "Pedestrian", "Ignore"])
+    MetadataCatalog.get("kitti_mots_" + d).set(thing_classes=["Pedestrian", "Ignore", "Car"])
 
 # Get the metadata for the KITTI-MOTS training dataset, used for visualizing predictions
 kitti_mots_metadata = MetadataCatalog.get("kitti_mots_val_gen")
