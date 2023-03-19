@@ -1,0 +1,21 @@
+Parameters:
+DATASET_PATH: ../../../KITTI-MOTS
+MODEL: MaskRCNN
+FINETUNING: False
+N_IMAGES_TEST: 20
+IMAGES_TEST_START: 0
+N_WORKERS: 4
+Starting script
+Loading KITTI-MOTS dataset
+Registering KITTI-MOTS train_gen dataset
+Registering KITTI-MOTS val_gen dataset
+Loading models and weights from MaskRCNN model
+Loading test images
+Running inference on images 0 to 19
+Running inference on 20 images
+Running inference on image ../../../KITTI-MOTS/testing/image_02/0000/000000.png
+Running inference on image ../../../KITTI-MOTS/testing/image_02/0000/000001.png
+Running inference on image ../../../KITTI-MOTS/testing/image_02/0000/000002.png
+Running inference on image ../../../KITTI-MOTS/testing/image_02/0000/000003.png
+Running inference on image ../../../KITTI-MOTS/testing/image_02/0000/000004.png
+Running inference on image ../../../KITTI-MOTS/testing/image_02/0000/000005.png

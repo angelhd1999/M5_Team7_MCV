@@ -1,0 +1,29 @@
+/ghome/group07/miniconda3/envs/m5/lib/python3.7/site-packages/torch/functional.py:445: UserWarning: torch.meshgrid: in an upcoming release, it will be required to pass the indexing argument. (Triggered internally at  ../aten/src/ATen/native/TensorShape.cpp:2157.)
+  return _VF.meshgrid(tensors, **kwargs)  # type: ignore[attr-defined]
+COCO Evaluator instantiated using config, this is deprecated behavior. Please pass in explicit arguments instead.
+Traceback (most recent call last):
+  File "main.py", line 319, in <module>
+    evaluator = COCOEvaluator("kitti_mots_val_gen", cfg, False, output_dir="./output/")
+  File "/export/home/group07/M5_Team7_MCV/detectron2/detectron2/evaluation/coco_evaluation.py", line 142, in __init__
+    convert_to_coco_json(dataset_name, cache_path, allow_cached=allow_cached_coco)
+  File "/export/home/group07/M5_Team7_MCV/detectron2/detectron2/data/datasets/coco.py", line 475, in convert_to_coco_json
+    json.dump(coco_dict, f)
+  File "/ghome/group07/miniconda3/envs/m5/lib/python3.7/json/__init__.py", line 179, in dump
+    for chunk in iterable:
+  File "/ghome/group07/miniconda3/envs/m5/lib/python3.7/json/encoder.py", line 431, in _iterencode
+    yield from _iterencode_dict(o, _current_indent_level)
+  File "/ghome/group07/miniconda3/envs/m5/lib/python3.7/json/encoder.py", line 405, in _iterencode_dict
+    yield from chunks
+  File "/ghome/group07/miniconda3/envs/m5/lib/python3.7/json/encoder.py", line 325, in _iterencode_list
+    yield from chunks
+  File "/ghome/group07/miniconda3/envs/m5/lib/python3.7/json/encoder.py", line 405, in _iterencode_dict
+    yield from chunks
+  File "/ghome/group07/miniconda3/envs/m5/lib/python3.7/json/encoder.py", line 325, in _iterencode_list
+    yield from chunks
+  File "/ghome/group07/miniconda3/envs/m5/lib/python3.7/json/encoder.py", line 325, in _iterencode_list
+    yield from chunks
+  File "/ghome/group07/miniconda3/envs/m5/lib/python3.7/json/encoder.py", line 438, in _iterencode
+    o = _default(o)
+  File "/ghome/group07/miniconda3/envs/m5/lib/python3.7/json/encoder.py", line 179, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+TypeError: Object of type int64 is not JSON serializable

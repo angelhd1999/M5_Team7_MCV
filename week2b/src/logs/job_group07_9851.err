@@ -2,7 +2,7 @@
   return _VF.meshgrid(tensors, **kwargs)  # type: ignore[attr-defined]
 COCO Evaluator instantiated using config, this is deprecated behavior. Please pass in explicit arguments instead.
 Traceback (most recent call last):
-  File "main.py", line 316, in <module>
+  File "main.py", line 319, in <module>
     evaluator = COCOEvaluator("kitti_mots_val_gen", cfg, False, output_dir="./output/")
   File "/export/home/group07/M5_Team7_MCV/detectron2/detectron2/evaluation/coco_evaluation.py", line 142, in __init__
     convert_to_coco_json(dataset_name, cache_path, allow_cached=allow_cached_coco)
