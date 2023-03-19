@@ -111,11 +111,11 @@ def get_kitti_mots_dicts(data_path, mode, model):
             record["image_id"] = idx
 
             # Initializing height and width with None
-            in_height = 375 # None
-            in_width = 1242 # None
-            record["height"] = in_height
-            record["width"] = in_width
-            default_size = True
+            # in_height = 375 # None
+            # in_width = 1242 # None
+            # record["height"] = in_height
+            # record["width"] = in_width
+            # default_size = True
             
             # Parse instance data
             objs = []
@@ -128,15 +128,17 @@ def get_kitti_mots_dicts(data_path, mode, model):
 
                 h = int(h)
                 w = int(w)
+                record["height"] = h
+                record["width"] = w
 
                 # Set height and width only once 
                 # if in_height is None and in_width is None: # ! This is never occuring now
-                if default_size:
-                    in_height = h
-                    in_width = w
-                    record["height"] = in_height
-                    record["width"] = in_width
-                    default_size = False
+                # if default_size:
+                #     in_height = h
+                #     in_width = w
+                #     record["height"] = in_height
+                #     record["width"] = in_width
+                #     default_size = False
                 
                 # Parse class and instance id
                 class_id = int(class_instance_ids) // 1000
@@ -144,15 +146,15 @@ def get_kitti_mots_dicts(data_path, mode, model):
                 instance_id = int(class_instance_ids) % 1000
                 
                 # Decode RLE mask encoding
-                rle = {'counts': rle_encoding, 'size': [in_height, in_width]}
+                rle = {'size': [h, w], 'counts': rle_encoding}
                 binary_mask = cocomask.decode(rle)
 
                 if class_id_re > 2 or np.sum(binary_mask) == 0:
                     continue
                     
                 # Compute the bounding box from the mask
-                y_indices, x_indices = np.where(binary_mask == 1)
-                bbox = [int(np.min(x_indices)), int(np.min(y_indices)), int(np.max(x_indices) - np.min(x_indices)), int(np.max(y_indices) - np.min(y_indices))]
+                y, x = np.where(binary_mask == 1)
+                bbox = [int(np.min(x)), int(np.min(y)), int(np.max(x) - np.min(x)), int(np.max(y) - np.min(y))]
                 
                 # Map class id to COCO class id
                 class_id = class_mapping_k_to_c[class_id]
@@ -161,14 +163,17 @@ def get_kitti_mots_dicts(data_path, mode, model):
                     "bbox": bbox,
                     "bbox_mode": BoxMode.XYWH_ABS,
                     "category_id": class_id,
-                    "instance_id": instance_id,
+                    # "instance_id": instance_id,
                 }
-                objs.append(obj)
-
                 if (model == 'MaskRCNN'):
-                    shape = [(x_indices, y_indices) for x_indices, y_indices in zip(x_indices, y_indices)]
+                    shape = [(int(x), int(y)) for x, y in zip(x, y)]
                     shape = [s for x in shape for s in x]
-                    obj["segmentation"] = shape
+                    # Discard if the shape is not a polygon
+                    # if len(shape) % 2 != 0 or len(shape) < 6:
+                    #     continue
+                    obj["segmentation"] = [shape]
+
+                objs.append(obj)
 
             # If there are no objects in the image, we skip it
             if len(objs) == 0:
