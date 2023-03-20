@@ -35,7 +35,7 @@ python script.py [--dataset_path PATH] [--model MODEL_NAME] [--finetuning] [--im
 - --finetuning: Enable fine-tuning of the model. If this flag is provided, the script will fine-tune the model on the KITTI-MOTS dataset.
 - --images_test_start START_INDEX (```default: 0```): Start index for test images to use for inference and visualization.
 - --n_images_test N_IMAGES (```default: 10```): Number of test images to use for inference and visualization.
-- --n_workers N_WORKERS (```default: 8```): Number of workers to use for data loading.
+- --n_workers N_WORKERS (```default: 4```): Number of workers to use for data loading.
 
 ### Example
 ```sh
