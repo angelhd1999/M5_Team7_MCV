@@ -47,4 +47,4 @@ This command will run the script with the Faster R-CNN model, enable fine-tuning
 - [Deliverables folder with the slides](https://drive.google.com/drive/folders/1u2li3fMPq72JS9kjdGnuZzbt4MwzZuf5?usp=sharing)
 
 ## Overleaf
-- [Overleaf link](https://www.overleaf.com/read/kfmrcrgyvrft)
+- [Overleaf link](https://www.overleaf.com/read/kfmrcrgyvrft): Report at **M5_Group07_Report.tex**
