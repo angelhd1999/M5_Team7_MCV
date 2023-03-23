@@ -10,7 +10,7 @@ Team 7 of the M5 at the Master in Computer Vision.
 ## Installation
  1. Go to the desired week:
 ```
-:: Where N is the week number
+:: Where N is the week number (for week 2: week2b)
 cd weekN
 ```
  2. (Optional) Create an environment.
@@ -30,12 +30,12 @@ python script.py [--dataset_path PATH] [--model MODEL_NAME] [--finetuning] [--im
 ```
 ### Parameters
 
-- --dataset_path PATH``` (default: ```../../../KITTI-MOTS```): Path to the KITTI-MOTS dataset.
-- --model MODEL_NAME``` (default: ```FasterRCNN```): Model to use for training and evaluation. Choose either ```'MaskRCNN'``` or ```'FasterRCNN'```.
-- --finetuning```: Enable fine-tuning of the model. If this flag is provided, the script will fine-tune the model on the KITTI-MOTS dataset.
-- --images_test_start START_INDEX``` (default: ```0```): Start index for test images to use for inference and visualization.
-- --n_images_test N_IMAGES``` (default: ```10```): Number of test images to use for inference and visualization.
-- --n_workers N_WORKERS``` (default: ```8```): Number of workers to use for data loading.
+- --dataset_path PATH (```default: ../../../KITTI-MOTS```): Path to the KITTI-MOTS dataset.
+- --model MODEL_NAME (```default: FasterRCNN```): Model to use for training and evaluation. Choose either ```'MaskRCNN'``` or ```'FasterRCNN'```.
+- --finetuning: Enable fine-tuning of the model. If this flag is provided, the script will fine-tune the model on the KITTI-MOTS dataset.
+- --images_test_start START_INDEX (```default: 0```): Start index for test images to use for inference and visualization.
+- --n_images_test N_IMAGES (```default: 10```): Number of test images to use for inference and visualization.
+- --n_workers N_WORKERS (```default: 4```): Number of workers to use for data loading.
 
 ### Example
 ```sh
@@ -47,4 +47,4 @@ This command will run the script with the Faster R-CNN model, enable fine-tuning
 - [Deliverables folder with the slides](https://drive.google.com/drive/folders/1u2li3fMPq72JS9kjdGnuZzbt4MwzZuf5?usp=sharing)
 
 ## Overleaf
-- [Overleaf link](???)
+- [Overleaf link](https://www.overleaf.com/read/kfmrcrgyvrft): Report at **M5_Group07_Report.tex**
