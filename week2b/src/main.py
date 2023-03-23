@@ -67,8 +67,8 @@ print(f"N_WORKERS: {N_WORKERS}")
 if FINETUNING:
     # New mapping from KITTI-MOTS to COCO classes -> nan on Pedestrians
     class_mapping_k_to_c = {  # Mapping KITTI-MOTS class indices to COCO class indices
-        1: 0, # KITTI-MOTS class 1 is "car" when read, so we map it to COCO class 2
-        2: 1 # KITTI-MOTS class 2 is "person" when read, so we map it to COCO class 1
+        1: 2, # KITTI-MOTS class 1 is "car" when read, so we map it to COCO class 2
+        2: 0 # KITTI-MOTS class 2 is "person" when read, so we map it to COCO class 1
     }
 else:
     class_mapping_k_to_c = {  # Mapping KITTI-MOTS class indices to COCO class indices
@@ -170,6 +170,9 @@ def get_kitti_mots_dicts(data_path, mode, model):
                 y, x = np.where(binary_mask == 1)
                 bbox = [int(np.min(x)), int(np.min(y)), int(np.max(x) - np.min(x)), int(np.max(y) - np.min(y))]
 
+                contours, _ = cv2.findContours(binary_mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+                contours = [list(np.squeeze(contour).flatten().astype(float)) for contour in contours if len(contour) > 3]
+
                 obj = {
                     "bbox": bbox,
                     "bbox_mode": BoxMode.XYWH_ABS,
@@ -179,7 +182,8 @@ def get_kitti_mots_dicts(data_path, mode, model):
                 if (model == 'MaskRCNN'):
                     shape = [(int(x), int(y)) for x, y in zip(x, y)]
                     shape = [s for x in shape for s in x]
-                    obj["segmentation"] = [shape]
+                    #obj["segmentation"] = [shape]
+                    obj["segmentation"] = contours
 
                 objs.append(obj)
 
@@ -215,14 +219,14 @@ def setup_config_finetuning(model_name, train_dataset_name, val_dataset_name):
     cfg.DATASETS.TEST = ()
     cfg.MODEL.FP16_ENABLED = True  # Enable mixed precision training for faster inference
     cfg.MODEL.ROI_HEADS.BATCH_SIZE_PER_IMAGE = 128  # You can adjust this value depending on your GPU memory
-    cfg.MODEL.ROI_HEADS.NUM_CLASSES = 2  # Number of classes in KITTI-MOTS dataset (excluding the ignore class)
+    cfg.MODEL.ROI_HEADS.NUM_CLASSES = 3  # Number of classes in KITTI-MOTS dataset (excluding the ignore class)
     cfg.MODEL.DEVICE="cuda"
 
 
     # Set up the training parameters
     cfg.SOLVER.IMS_PER_BATCH = 4
     cfg.SOLVER.BASE_LR = 0.001
-    cfg.SOLVER.MAX_ITER = 10000 # Prev: 1000 # You can adjust the number of iterations based on your needs
+    cfg.SOLVER.MAX_ITER = 1000 # Prev: 1000 # You can adjust the number of iterations based on your needs
     cfg.SOLVER.STEPS = []  # Do not decay learning rate
     cfg.SOLVER.GAMMA = 0.05
     cfg.SOLVER.CHECKPOINT_PERIOD = 500  # Save a checkpoint every 500 iterations
