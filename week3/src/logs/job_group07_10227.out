@@ -1,0 +1,100 @@
+Parameters:
+DATASET_PATH: ../../../mcv/datasets/out_of_context
+MODEL: FasterRCNN
+FINETUNING: False
+FINETUNING_PATH: 
+N_IMAGES_TEST: 10
+IMAGES_TEST_START: 0
+N_WORKERS: 4
+Starting script
+Loading models and weights from FasterRCNN model
+Loading test images
+['../../../mcv/datasets/out_of_context/im001.jpg', '../../../mcv/datasets/out_of_context/im002.jpg', '../../../mcv/datasets/out_of_context/im003.jpg', '../../../mcv/datasets/out_of_context/im004.jpg', '../../../mcv/datasets/out_of_context/im005.jpg', '../../../mcv/datasets/out_of_context/im006.jpg', '../../../mcv/datasets/out_of_context/im007.jpg', '../../../mcv/datasets/out_of_context/im008.jpg', '../../../mcv/datasets/out_of_context/im009.jpg', '../../../mcv/datasets/out_of_context/im010.jpg', '../../../mcv/datasets/out_of_context/im011.jpg', '../../../mcv/datasets/out_of_context/im012.jpg', '../../../mcv/datasets/out_of_context/im013.jpg', '../../../mcv/datasets/out_of_context/im014.jpg', '../../../mcv/datasets/out_of_context/im015.jpg', '../../../mcv/datasets/out_of_context/im016.jpg', '../../../mcv/datasets/out_of_context/im017.jpg', '../../../mcv/datasets/out_of_context/im018.jpg', '../../../mcv/datasets/out_of_context/im019.jpg', '../../../mcv/datasets/out_of_context/im020.jpg', '../../../mcv/datasets/out_of_context/im021.jpg', '../../../mcv/datasets/out_of_context/im022.jpg', '../../../mcv/datasets/out_of_context/im023.jpg', '../../../mcv/datasets/out_of_context/im024.jpg', '../../../mcv/datasets/out_of_context/im025.jpg', '../../../mcv/datasets/out_of_context/im026.jpg', '../../../mcv/datasets/out_of_context/im027.jpg', '../../../mcv/datasets/out_of_context/im028.jpg', '../../../mcv/datasets/out_of_context/im029.jpg', '../../../mcv/datasets/out_of_context/im030.jpg', '../../../mcv/datasets/out_of_context/im031.jpg', '../../../mcv/datasets/out_of_context/im032.jpg', '../../../mcv/datasets/out_of_context/im033.jpg', '../../../mcv/datasets/out_of_context/im034.jpg', '../../../mcv/datasets/out_of_context/im035.jpg', '../../../mcv/datasets/out_of_context/im036.jpg', '../../../mcv/datasets/out_of_context/im037.jpg', '../../../mcv/datasets/out_of_context/im038.jpg', '../../../mcv/datasets/out_of_context/im044.jpg', '../../../mcv/datasets/out_of_context/im045.jpg', '../../../mcv/datasets/out_of_context/im047.jpg', '../../../mcv/datasets/out_of_context/im050.jpg']
+Running inference
+Running inference on image ../../../mcv/datasets/out_of_context/im001.jpg
+Running inference on image ../../../mcv/datasets/out_of_context/im002.jpg
+Running inference on image ../../../mcv/datasets/out_of_context/im003.jpg
+Running inference on image ../../../mcv/datasets/out_of_context/im004.jpg
+Running inference on image ../../../mcv/datasets/out_of_context/im005.jpg
+Running inference on image ../../../mcv/datasets/out_of_context/im006.jpg
+Running inference on image ../../../mcv/datasets/out_of_context/im007.jpg
+Running inference on image ../../../mcv/datasets/out_of_context/im008.jpg
+Running inference on image ../../../mcv/datasets/out_of_context/im009.jpg
+Running inference on image ../../../mcv/datasets/out_of_context/im010.jpg
+Running inference on image ../../../mcv/datasets/out_of_context/im011.jpg
+Running inference on image ../../../mcv/datasets/out_of_context/im012.jpg
+Running inference on image ../../../mcv/datasets/out_of_context/im013.jpg
+Running inference on image ../../../mcv/datasets/out_of_context/im014.jpg
+Running inference on image ../../../mcv/datasets/out_of_context/im015.jpg
+Running inference on image ../../../mcv/datasets/out_of_context/im016.jpg
+Running inference on image ../../../mcv/datasets/out_of_context/im017.jpg
+Running inference on image ../../../mcv/datasets/out_of_context/im018.jpg
+Running inference on image ../../../mcv/datasets/out_of_context/im019.jpg
+Running inference on image ../../../mcv/datasets/out_of_context/im020.jpg
+Running inference on image ../../../mcv/datasets/out_of_context/im021.jpg
+Running inference on image ../../../mcv/datasets/out_of_context/im022.jpg
+Running inference on image ../../../mcv/datasets/out_of_context/im023.jpg
+Running inference on image ../../../mcv/datasets/out_of_context/im024.jpg
+Running inference on image ../../../mcv/datasets/out_of_context/im025.jpg
+Running inference on image ../../../mcv/datasets/out_of_context/im026.jpg
+Running inference on image ../../../mcv/datasets/out_of_context/im027.jpg
+Running inference on image ../../../mcv/datasets/out_of_context/im028.jpg
+Running inference on image ../../../mcv/datasets/out_of_context/im029.jpg
+Running inference on image ../../../mcv/datasets/out_of_context/im030.jpg
+Running inference on image ../../../mcv/datasets/out_of_context/im031.jpg
+Running inference on image ../../../mcv/datasets/out_of_context/im032.jpg
+Running inference on image ../../../mcv/datasets/out_of_context/im033.jpg
+Running inference on image ../../../mcv/datasets/out_of_context/im034.jpg
+Running inference on image ../../../mcv/datasets/out_of_context/im035.jpg
+Running inference on image ../../../mcv/datasets/out_of_context/im036.jpg
+Running inference on image ../../../mcv/datasets/out_of_context/im037.jpg
+Running inference on image ../../../mcv/datasets/out_of_context/im038.jpg
+Running inference on image ../../../mcv/datasets/out_of_context/im044.jpg
+Running inference on image ../../../mcv/datasets/out_of_context/im045.jpg
+Running inference on image ../../../mcv/datasets/out_of_context/im047.jpg
+Running inference on image ../../../mcv/datasets/out_of_context/im050.jpg
+Inference done
+Visualizing predictions
+Visualizing prediction 1/42: ../../../mcv/datasets/out_of_context/im001.jpg
+Visualizing prediction 2/42: ../../../mcv/datasets/out_of_context/im002.jpg
+Visualizing prediction 3/42: ../../../mcv/datasets/out_of_context/im003.jpg
+Visualizing prediction 4/42: ../../../mcv/datasets/out_of_context/im004.jpg
+Visualizing prediction 5/42: ../../../mcv/datasets/out_of_context/im005.jpg
+Visualizing prediction 6/42: ../../../mcv/datasets/out_of_context/im006.jpg
+Visualizing prediction 7/42: ../../../mcv/datasets/out_of_context/im007.jpg
+Visualizing prediction 8/42: ../../../mcv/datasets/out_of_context/im008.jpg
+Visualizing prediction 9/42: ../../../mcv/datasets/out_of_context/im009.jpg
+Visualizing prediction 10/42: ../../../mcv/datasets/out_of_context/im010.jpg
+Visualizing prediction 11/42: ../../../mcv/datasets/out_of_context/im011.jpg
+Visualizing prediction 12/42: ../../../mcv/datasets/out_of_context/im012.jpg
+Visualizing prediction 13/42: ../../../mcv/datasets/out_of_context/im013.jpg
+Visualizing prediction 14/42: ../../../mcv/datasets/out_of_context/im014.jpg
+Visualizing prediction 15/42: ../../../mcv/datasets/out_of_context/im015.jpg
+Visualizing prediction 16/42: ../../../mcv/datasets/out_of_context/im016.jpg
+Visualizing prediction 17/42: ../../../mcv/datasets/out_of_context/im017.jpg
+Visualizing prediction 18/42: ../../../mcv/datasets/out_of_context/im018.jpg
+Visualizing prediction 19/42: ../../../mcv/datasets/out_of_context/im019.jpg
+Visualizing prediction 20/42: ../../../mcv/datasets/out_of_context/im020.jpg
+Visualizing prediction 21/42: ../../../mcv/datasets/out_of_context/im021.jpg
+Visualizing prediction 22/42: ../../../mcv/datasets/out_of_context/im022.jpg
+Visualizing prediction 23/42: ../../../mcv/datasets/out_of_context/im023.jpg
+Visualizing prediction 24/42: ../../../mcv/datasets/out_of_context/im024.jpg
+Visualizing prediction 25/42: ../../../mcv/datasets/out_of_context/im025.jpg
+Visualizing prediction 26/42: ../../../mcv/datasets/out_of_context/im026.jpg
+Visualizing prediction 27/42: ../../../mcv/datasets/out_of_context/im027.jpg
+Visualizing prediction 28/42: ../../../mcv/datasets/out_of_context/im028.jpg
+Visualizing prediction 29/42: ../../../mcv/datasets/out_of_context/im029.jpg
+Visualizing prediction 30/42: ../../../mcv/datasets/out_of_context/im030.jpg
+Visualizing prediction 31/42: ../../../mcv/datasets/out_of_context/im031.jpg
+Visualizing prediction 32/42: ../../../mcv/datasets/out_of_context/im032.jpg
+Visualizing prediction 33/42: ../../../mcv/datasets/out_of_context/im033.jpg
+Visualizing prediction 34/42: ../../../mcv/datasets/out_of_context/im034.jpg
+Visualizing prediction 35/42: ../../../mcv/datasets/out_of_context/im035.jpg
+Visualizing prediction 36/42: ../../../mcv/datasets/out_of_context/im036.jpg
+Visualizing prediction 37/42: ../../../mcv/datasets/out_of_context/im037.jpg
+Visualizing prediction 38/42: ../../../mcv/datasets/out_of_context/im038.jpg
+Visualizing prediction 39/42: ../../../mcv/datasets/out_of_context/im044.jpg
+Visualizing prediction 40/42: ../../../mcv/datasets/out_of_context/im045.jpg
+Visualizing prediction 41/42: ../../../mcv/datasets/out_of_context/im047.jpg
+Visualizing prediction 42/42: ../../../mcv/datasets/out_of_context/im050.jpg
+Visualization done

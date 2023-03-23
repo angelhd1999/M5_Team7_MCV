@@ -1,0 +1,10 @@
+/ghome/group07/miniconda3/envs/m5/lib/python3.7/site-packages/torch/functional.py:445: UserWarning: torch.meshgrid: in an upcoming release, it will be required to pass the indexing argument. (Triggered internally at  ../aten/src/ATen/native/TensorShape.cpp:2157.)
+  return _VF.meshgrid(tensors, **kwargs)  # type: ignore[attr-defined]
+Traceback (most recent call last):
+  File "main.py", line 138, in <module>
+    visualize_predictions(predictions, test_image_list,"output_visualizations")
+  File "main.py", line 102, in visualize_predictions
+    instances.pred_classes = torch.tensor([class_mapping_c_to_k[c.item()] for c in instances.pred_classes])  # Apply the class mapping
+  File "main.py", line 102, in <listcomp>
+    instances.pred_classes = torch.tensor([class_mapping_c_to_k[c.item()] for c in instances.pred_classes])  # Apply the class mapping
+NameError: name 'class_mapping_c_to_k' is not defined
