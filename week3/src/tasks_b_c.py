@@ -52,7 +52,7 @@ def run_inference_and_visualize(predictor, img_path):
 
     return vis_img
 
-def get_mask_and_image(coco, class_name, save_path='./task_b/'):
+def get_mask_and_image(coco, class_name, save_path='./task_b/', only_image=False):
     """
     Get a random image containing a specified class, save the image and its segmentation masks.
 
@@ -69,6 +69,9 @@ def get_mask_and_image(coco, class_name, save_path='./task_b/'):
     # Get a random image containing the specified class
     metadata = coco.loadImgs(img_ids[np.random.randint(0, len(img_ids))])[0]
     img = io.imread(metadata['coco_url'])
+
+    if only_image:
+        return img
 
     # Save the image
     plt.imsave(f'{save_path}{class_name}.jpg', img)
@@ -161,7 +164,7 @@ def task_b(predictor, coco, class_name, least5_per_class_dict, random_positions_
     cropped_instance = crop_instance_from_image(image, mask, class_name, save_path=save_path)
 
     # Get a random image of the least coocurrent class
-    least_coocurrent_image, _ = get_mask_and_image(coco, least_coocurrent_class, save_path=save_path)
+    least_coocurrent_image = get_mask_and_image(coco, least_coocurrent_class, save_path=save_path, only_image=True)
 
     # Add the cropped instance to the least coocurrent image at random_positions_num random positions
     height, width, _ = least_coocurrent_image.shape
