@@ -19,3 +19,5 @@ python inference.py
 python style_transfer.py
 python inference.py
 ```
+
+The code is inspired from: https://github.com/rgeirhos/texture-vs-shape
