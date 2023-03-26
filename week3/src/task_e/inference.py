@@ -1,5 +1,10 @@
 import cv2
 
+import os
+
+os.environ['KMP_DUPLICATE_LIB_OK']='True'
+
+
 from argparse import ArgumentParser, ArgumentDefaultsHelpFormatter
 from pathlib import Path
 
@@ -9,12 +14,12 @@ from detectron2.data import MetadataCatalog
 from detectron2.engine import DefaultPredictor
 from detectron2.utils.visualizer import Visualizer
 
-from config import RESULT_PATH
+from configs import OUTPUT_DIR
 
 
 def main():
-    dataset_path = Path(RESULT_PATH)
-    out_path = Path(RESULT_PATH)
+    dataset_path = Path(OUTPUT_DIR)
+    out_path = Path(OUTPUT_DIR)
     out_path = out_path / "segmentation"
     print(out_path)
     out_path.mkdir(parents=True, exist_ok=True)
