@@ -1,0 +1,7 @@
+OUTPUT_DIR = 'week3/task_e/output'
+STYLE_PATH = "week3/style"
+COCO_PATH = "week3/val2017"
+
+NUM_STEPS = 1000
+COCO_WEIGHT = 10
+STYLE_WEIGHT = 10000
