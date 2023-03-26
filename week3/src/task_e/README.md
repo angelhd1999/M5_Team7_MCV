@@ -12,6 +12,7 @@ python inference.py
 2. To perform your own style transfer:
 
     2.1 Download the style transfer dataset: https://www.kaggle.com/c/painter-by-numbers/data
+   
     2.2 Put style transfer data and COCO dataset at the prescribed path in ```configs.py```
 
 ```bash
