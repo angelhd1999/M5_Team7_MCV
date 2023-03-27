@@ -7,14 +7,14 @@ import torchvision.models as models
 from PIL import Image
 from torchvision.utils import save_image
 
-from config import RESULT_PATH, STYLE_PATH, CONTENT_PATH, NUM_STEPS, CONTENT_WEIGHT, STYLE_WEIGHT
+from config import OUTPUT_DIR, STYLE_PATH, COCO_PATH, NUM_STEPS, CONTENT_WEIGHT, STYLE_WEIGHT
 from utils import image_loader, make_dirs, device, run_style_transfer, cnn_normalization_mean, cnn_normalization_std
 
 # Generate a folder to save results
 make_dirs(RESULT_PATH)
 
 style_images = [f for f in listdir(STYLE_PATH) if isfile(join(STYLE_PATH, f))]
-content_images = [f for f in listdir(CONTENT_PATH) if isfile(join(CONTENT_PATH, f))]
+content_images = [f for f in listdir(COCO_PATH) if isfile(join(CONTENT_PATH, f))]
 
 # sort list
 style_images = sorted(style_images, key=lambda x: int(os.path.splitext(x)[0]))
