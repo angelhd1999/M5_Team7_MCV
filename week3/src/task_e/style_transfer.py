@@ -7,7 +7,7 @@ import torchvision.models as models
 from PIL import Image
 from torchvision.utils import save_image
 
-from config import OUTPUT_DIR, STYLE_PATH, COCO_PATH, NUM_STEPS, CONTENT_WEIGHT, STYLE_WEIGHT
+from configs import OUTPUT_DIR, STYLE_PATH, COCO_PATH, NUM_STEPS, COCO_WEIGHT, STYLE_WEIGHT
 from utils import image_loader, make_dirs, device, run_style_transfer, cnn_normalization_mean, cnn_normalization_std
 
 # Generate a folder to save results
