@@ -20,11 +20,12 @@ os.environ['KMP_DUPLICATE_LIB_OK']='True'
 
 
 import numpy as np
-import umap
+import umap.umap_ as umap
 import torch
 import torch.nn as nn
 from cycler import cycler
 from torch import optim
+import faiss
 
 #from torchinfo import summary
 from torch.utils.data import DataLoader
@@ -34,10 +35,10 @@ from torchvision.datasets import ImageFolder
 import sys
 import pickle
 from metrics import mpk, mAP
-
+from siamese_network import SiameseNetwork,SiameseNetworkDataset,ContrastiveLoss
 # Configs
 config = {
-    "loss_type": "CONTRASTIVE",
+    "loss_type": "contrastive",
     "feature_path" : "./results/taskb/"
     }
 # Creating the model
@@ -82,7 +83,7 @@ def visualizer_umap(umapper, umap_embeddings, labels, split_name, keyname, *args
 mit_split_path = Path('/Users/ayanbanerjee/Documents/m5/project/week1/MIT_split')
 output_path = Path('./results')
 models = resnet50(32)
-models.load_state_dict(torch.load('sm_constrastive.pt'))
+#models.load_state_dict(torch.load('sm_constrastive.pt'))
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # Some Transformations
@@ -154,12 +155,12 @@ metric_trainer = trainers.MetricLossOnly(
     dataset=train_dataset,
     data_device=device,
     sampler=class_sampler,
-    lr_schedulers= {"trunk":models, "step_type" : optim.lr_scheduler.StepLR(optimizer, step_size=2,gamma=0.9)},
+    #lr_schedulers= {"trunk":models, "step_type" : optim.lr_scheduler.StepLR(optimizer, step_size=2,gamma=0.9)},
     end_of_iteration_hook=hooks.end_of_iteration_hook,
     end_of_epoch_hook=end_of_epoch_hook,
 )
 metric_trainer.train(1, 100)   
-    #torch.save(model.state_dict(), '{}/weights_{}.pth'.format(config['out_path'], config['loss_type'])) 
+#torch.save(models.state_dict(), '{}/weights_{}.pth'.format(output_path, config['loss_type'])) 
     
     #sys.exit()
     #feature extraction (embeddings):
