@@ -1,0 +1,16 @@
+#!/bin/bash
+#SBATCH -n 4 # Number of cores
+#SBATCH --mem 4096 # 4GB solicitados.
+#SBATCH -p mhigh,mhigh # or mlow Partition to submit to master low prioriy queue
+#SBATCH --gres gpu:1 # Para pedir Pascales MAX 8
+#SBATCH -o %x_%u_%j.out # File to which STDOUT will be written
+#SBATCH -e %x_%u_%j.err # File to which STDERR will be written
+#-u is for unbuffered output, so that you can see the output of your program
+# All options:
+# python -u main.py --model FasterRCNN --n_images_test 20
+# python -u main.py --model MaskRCNN --n_images_test 20
+# python -u main.py --model FasterRCNN --n_images_test 20 --finetuning
+# python -u main.py --model FasterRCNN --n_images_test 20 --finetuning --finetuning_path ./output_FasterRCNN_finetuned_ROGC6T
+# python -u main.py --model MaskRCNN --n_images_test 20 --finetuning
+# ? To run it: sbatch --output=logs/%x_%u_%j.out --error=logs/%x_%u_%j.err job
+python cocosplit.py -s 0.5 ../../../../mcv/datasets/COCO/captions_val2014.json captions_validation2014.json captions_test2014.json
