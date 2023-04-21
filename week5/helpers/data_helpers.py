@@ -51,9 +51,6 @@ class COCOImageToTextDataset(torch.utils.data.Dataset):
         negative_captions = [annotation['caption'] for annotation in negative_annotations]
         negative_caption = np.random.choice(negative_captions)
 
-        # Print captions
-        print(f'Positive caption: {positive_caption}')
-        print(f'Negative caption: {negative_caption}')
 
         img_info = self.coco.loadImgs([img_id])[0]
         img_path = os.path.join(self.img_dir, img_info['file_name'])
@@ -108,18 +105,10 @@ class COCOTextToImageDataset(torch.utils.data.Dataset):
         # Read as PIL image
         negative_img = Image.open(negative_img_path).convert('RGB')
 
-        # Print captions
-        print(f'Anchor caption: {anchor_caption}')
-
         positive_img_info = self.coco.loadImgs([img_id])[0]
         positive_img_path = os.path.join(self.img_dir, positive_img_info['file_name'])
         # Read as PIL image
         positive_img = Image.open(positive_img_path).convert('RGB')
-
-        # Save images
-        positive_img.save('positive_img.jpg')
-        negative_img.save('negative_img.jpg')
-        exit()
 
         if self.transform:
             positive_img = self.transform(positive_img)
