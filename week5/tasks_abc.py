@@ -45,89 +45,104 @@ STEP_SIZE = args.step_size
 GAMMA = args.gamma
 MARGIN = args.margin
 
-start = time.time()
 
-coco_train, train_img_dir = load_coco_dataset(DATA_DIR, DATA_DIR, 'train2014', 'train2014')
-coco_val, val_img_dir = load_coco_dataset(VAL_TEST_ANNS_DIR, DATA_DIR, 'validation2014', 'val2014')
-coco_test, test_img_dir = load_coco_dataset(VAL_TEST_ANNS_DIR, DATA_DIR, 'test2014', 'val2014')
+def main():
+    start = time.time()
 
-# * Added the GeneralizedRCNNTransform to the transforms
-transform = transforms.Compose([
-    transforms.Resize((IMG_SIZE, IMG_SIZE)),
-    transforms.ToTensor(),
-    transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]), # * Also in GeneralizedRCNNTransform
-])
+    # * Added the GeneralizedRCNNTransform to the transforms
+    transform = transforms.Compose([
+        transforms.Resize((IMG_SIZE, IMG_SIZE)),
+        transforms.ToTensor(),
+        transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]), # * Also in GeneralizedRCNNTransform
+    ])
 
-if TRAIN:
-    train_dataloader = create_dataloaders(coco_train, train_img_dir, transform, BATCH_SIZE, NUM_WORKERS)
-if VALIDATE:
-    val_dataloader = create_dataloaders(coco_val, val_img_dir, transform, BATCH_SIZE, NUM_WORKERS)
+    if TRAIN:
+        print('Train enabled')
+        coco_train, train_img_dir = load_coco_dataset(DATA_DIR, DATA_DIR, 'train2014', 'train2014')
+        train_dataloader = create_dataloaders(coco_train, train_img_dir, transform, BATCH_SIZE, NUM_WORKERS, MODE)
+    if VALIDATE:
+        print('Validation enabled')
+        coco_val, val_img_dir = load_coco_dataset(VAL_TEST_ANNS_DIR, DATA_DIR, 'validation2014', 'val2014')
+        val_dataloader = create_dataloaders(coco_val, val_img_dir, transform, BATCH_SIZE, NUM_WORKERS, MODE)
+    if TEST:
+        print('Test enabled')
+        coco_test, test_img_dir = load_coco_dataset(VAL_TEST_ANNS_DIR, DATA_DIR, 'test2014', 'val2014')
+        test_dataloader = create_dataloaders(coco_test, test_img_dir, transform, BATCH_SIZE, NUM_WORKERS, MODE)
 
-# Create the triplet network and set up the training process
-device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    # Create the triplet network and set up the training process
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-# Use the TripletMarginLoss from the pytorch_metric_learning
-criterion = nn.TripletMarginLoss(margin=MARGIN)
+    # Instantiate the custom model with the desired embedding dimension
+    backbone_body = fasterrcnn_resnet50_fpn(weights='DEFAULT').backbone
+    feature_extractor = CustomModel(backbone_body, EMBEDDING_DIM)
 
-# Instantiate the custom model with the desired embedding dimension
-backbone_body = fasterrcnn_resnet50_fpn(weights='DEFAULT').backbone
-feature_extractor = CustomModel(backbone_body, EMBEDDING_DIM)
+    model = TripletNetwork(feature_extractor).to(device)
+    # Use the TripletMarginLoss from the pytorch_metric_learning
+    criterion = nn.TripletMarginLoss(margin=MARGIN)
 
-model = TripletNetwork(feature_extractor).to(device)
+    if TRAIN:
+        optimizer = torch.optim.Adam(model.parameters(), lr=LEARNING_RATE)
+        if SCHEDULER:
+            scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=STEP_SIZE, gamma=GAMMA)
 
-if TRAIN:
-    optimizer = torch.optim.Adam(model.parameters(), lr=LEARNING_RATE)
-    if SCHEDULER:
-        scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=STEP_SIZE, gamma=GAMMA)
+        for epoch in range(NUM_EPOCHS):
+            model.train()
+            epoch_loss = 0.0
+            num_batches = 0
+            
+            # for anchor_imgs, pos_captions, neg_captions in train_dataloader:
+            #     anchor_imgs = anchor_imgs.to(device)
+            #     print(f'Positive caption from main: {pos_captions}')
+            #     print(f'Negative caption from main: {neg_captions}')
+            for anchor_captions, pos_imgs, neg_imgs in train_dataloader:
+                anchor_captions = anchor_captions.to(device)
+                # print(f'Positive caption from main: {pos_captions}')
+                # print(f'Negative caption from main: {neg_captions}')
+                # Transform the anchor_ids to a list
+                # anchor_ids = anchor_ids.tolist()
 
-    for epoch in range(NUM_EPOCHS):
-        model.train()
-        epoch_loss = 0.0
-        num_batches = 0
+                positive_imgs = []
+                negative_imgs = []
+                # for anchor_id in anchor_ids:
+                #     # Get the positive image
+                #     print(f'Anchor id: {anchor_id}')
+                #     # positive_imgs.append(positive_img)
+                #     # negative_imgs.append(negative_img)
+
+                # Stack the images
+                positive_imgs = torch.stack(positive_imgs).to(device)
+                negative_imgs = torch.stack(negative_imgs).to(device)
+                optimizer.zero_grad()
+
+                # anchor_embeddings, positive_embeddings, negative_embeddings = model(anchor_imgs, positive_imgs, negative_imgs)
+                anchor_embeddings, positive_embeddings, negative_embeddings = model([], positive_imgs, negative_imgs)
+
+                loss = criterion(anchor_embeddings, positive_embeddings, negative_embeddings)
+                loss.backward()
+                optimizer.step()
+
+                epoch_loss += loss.item()
+                num_batches += 1
+                if SCHEDULER:
+                    # Update the learning rate
+                    scheduler.step()
+                # Print the loss every 10 batches
+                if num_batches % 10 == 0:
+                    print(f"Batch {num_batches}, Completed: {num_batches*64}/{len(train_dataloader.dataset)}, Loss: {loss.item():.4f}")
+
+            epoch_loss /= num_batches
+            print(f"Epoch {epoch+1}/{NUM_EPOCHS}, Loss: {epoch_loss:.4f}")
+            # If it's not the last epoch, save the model
+            if epoch != NUM_EPOCHS - 1:
+                save_model(model, MODE, TXT_EMB, args, epoch, epoch_loss)
         
-        for anchor_imgs, anchor_ids in train_dataloader:
-            anchor_imgs = anchor_imgs.to(device)
-            # Transform the anchor_ids to a list
-            anchor_ids = anchor_ids.tolist()
+        # Save the model after training
+        save_model(model, MODE, TXT_EMB, args, epoch, epoch_loss, final=True)
+        end = time.time()
+        print(f"Training time: {end - start} seconds")
+    else:
+        # Load the model weights
+        model.load_state_dict(torch.load(LOAD_MODEL_PATH))
 
-            positive_imgs = []
-            negative_imgs = []
-            for anchor_id in anchor_ids:
-                # Get the positive image
-                print(f'Anchor id: {anchor_id}')
-                # positive_imgs.append(positive_img)
-                # negative_imgs.append(negative_img)
-
-            # Stack the images
-            positive_imgs = torch.stack(positive_imgs).to(device)
-            negative_imgs = torch.stack(negative_imgs).to(device)
-            optimizer.zero_grad()
-
-            anchor_embeddings, positive_embeddings, negative_embeddings = model(anchor_imgs, positive_imgs, negative_imgs)
-
-            loss = criterion(anchor_embeddings, positive_embeddings, negative_embeddings)
-            loss.backward()
-            optimizer.step()
-
-            epoch_loss += loss.item()
-            num_batches += 1
-            if SCHEDULER:
-                # Update the learning rate
-                scheduler.step()
-            # Print the loss every 10 batches
-            if num_batches % 10 == 0:
-                print(f"Batch {num_batches}, Completed: {num_batches*64}/{len(train_dataloader.dataset)}, Loss: {loss.item():.4f}")
-
-        epoch_loss /= num_batches
-        print(f"Epoch {epoch+1}/{NUM_EPOCHS}, Loss: {epoch_loss:.4f}")
-        # If it's not the last epoch, save the model
-        if epoch != NUM_EPOCHS - 1:
-            save_model(model, MODE, TXT_EMB, args, epoch, epoch_loss)
-    
-    # Save the model after training
-    save_model(model, MODE, TXT_EMB, args, epoch, epoch_loss, final=True)
-    end = time.time()
-    print(f"Training time: {end - start} seconds")
-else:
-    # Load the model weights
-    model.load_state_dict(torch.load(LOAD_MODEL_PATH))
+if __name__ == '__main__':
+    main()
