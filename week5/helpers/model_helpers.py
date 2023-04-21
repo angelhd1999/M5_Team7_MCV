@@ -1,6 +1,7 @@
 import fasttext
 import torch
 import torch.nn as nn
+import torchvision.models as models
 from torchvision.models.detection import fasterrcnn_resnet50_fpn
 import json
 import datetime
@@ -22,18 +23,43 @@ class CustomModel(nn.Module):
         return x
 
 # Implement the triplet network model
-class TripletNetwork(nn.Module):
-    def __init__(self, feature_extractor):
-        super(TripletNetwork, self).__init__()
-        self.feature_extractor = feature_extractor
+class TripletNetworkITT(nn.Module):
+    def __init__(self, txt_emb_model, embedding_dim):
+        super(TripletNetworkITT, self).__init__()
+        ## IMAGE MODEL ##
+        # Load the pre-trained ResNet-50 model
+        resnet = models.resnet50(pretrained=True)
+        # Remove the last fully connected layer
+        self.img_embedder = torch.nn.Sequential(*(list(resnet.children())[:-1]))
+        # Set is_fasttext to True if the txt_emb_model is fasttext
 
-    def forward(self, anchor, positive, negative):
-        anchor_embedding = self.feature_extractor(anchor)
-        # if positive is None: # Added for evaluation
-        #     return anchor_embedding
-        positive_embedding = self.feature_extractor(positive)
-        negative_embedding = self.feature_extractor(negative)
-        return anchor_embedding, positive_embedding, negative_embedding
+        ## TEXT MODEL ##
+        self.is_fasttext = True if txt_emb_model == 'fasttext' else False
+        if self.is_fasttext:
+            # Load the fasttext model
+            fasttext_model = fasttext.load_model('../../../mcv/m5/fasttext_wiki.en.bin')
+            self.txt_embedder = fasttext_model.get_sentence_vector
+        else:
+            raise ValueError(f'BERT not implemented yet')
+        
+        ## COMMON SPACE PROJECTION ##
+        # ? Image embedding projection, 2048 is the size of the output of the last layer of modified ResNet-50
+        self.img_projection = nn.Linear(2048, embedding_dim)
+        # ? Text embedding projection, 300 is the size of the output of the fasttext model
+        self.txt_projection = nn.Linear(300, embedding_dim)
+
+    def forward(self, anchor_imgs, pos_captions, neg_captions):
+        # Get the image embeddings
+        anchor_img_emb = self.img_embedder(anchor_imgs)
+        # Project the image embeddings to the common space
+        anchor_img_emb = self.img_projection(anchor_img_emb)
+        # Get the text embeddings
+        pos_cap_embs = self.txt_embedder(pos_captions)
+        neg_cap_emb = self.txt_embedder(neg_captions)
+        # Project the text embeddings to the common space
+        pos_cap_embs = self.txt_projection(pos_cap_embs)
+        neg_cap_emb = self.txt_projection(neg_cap_emb)
+        return anchor_img_emb, pos_cap_embs, neg_cap_emb
 
 # Save model and args
 def save_model(model, mode, txt_emb, args, epoch, loss, final=False):

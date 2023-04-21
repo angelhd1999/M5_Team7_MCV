@@ -7,6 +7,7 @@ from torch.utils.data import DataLoader
 from pycocotools.coco import COCO
 import torch.nn as nn
 import torch.nn.functional as F
+import torchvision.models as models
 from torchvision.models.detection import fasterrcnn_resnet50_fpn
 import numpy as np
 import json
@@ -19,7 +20,7 @@ import datetime
 # Internal imports
 from helpers.utils import parse_args
 from helpers.data_helpers import load_coco_dataset, create_dataloaders
-from helpers.model_helpers import CustomModel, TripletNetwork, save_model
+from helpers.model_helpers import CustomModel, TripletNetworkITT, save_model
 
 args = parse_args()
 # *Static variables
@@ -31,7 +32,7 @@ TRAIN = args.train
 VALIDATE = args.validate
 TEST = args.test
 MODE = args.mode
-TXT_EMB = args.txt_emb
+TXT_EMB_MODEL = args.txt_emb_model
 LOAD_MODEL_PATH = args.load_model_path
 NUM_EPOCHS = args.num_epochs
 SCHEDULER = args.scheduler
@@ -45,6 +46,63 @@ STEP_SIZE = args.step_size
 GAMMA = args.gamma
 MARGIN = args.margin
 
+def train(model, criterion, mode, train_dataloader, num_epochs, scheduler, device):
+    optimizer = torch.optim.Adam(model.parameters(), lr=LEARNING_RATE)
+    if SCHEDULER:
+        scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=STEP_SIZE, gamma=GAMMA)
+
+    IS_ITT = None
+    if mode == 'ITT':
+        IS_ITT = True
+    elif mode == 'TTI':
+        IS_ITT = False
+    else:
+        raise ValueError(f'Invalid mode: {mode}')
+
+    for epoch in range(num_epochs):
+        model.train()
+        epoch_loss = 0.0
+        num_batches = 0
+        
+        for x, y, z in train_dataloader:
+            if IS_ITT:
+                anchor_imgs = x
+                pos_captions = y
+                neg_captions = z
+                print('pos_captions', pos_captions)
+            else:
+                anchor_captions = x
+                pos_imgs = y
+                neg_imgs = z
+
+            optimizer.zero_grad()
+
+            if IS_ITT:
+                anchor_img_emb, pos_cap_embs, neg_cap_emb = model(anchor_imgs, pos_captions, neg_captions)
+                loss = criterion(anchor_img_emb, pos_cap_embs, neg_cap_emb)
+            else:
+                anchor_cap_emb, pos_img_embs, neg_img_emb = model(anchor_captions, pos_imgs, neg_imgs)
+                loss = criterion(anchor_cap_emb, pos_img_embs, neg_img_emb)
+
+            loss.backward()
+            optimizer.step()
+
+            epoch_loss += loss.item()
+            num_batches += 1
+            if SCHEDULER:
+                # Update the learning rate
+                scheduler.step()
+            # Print the loss every 10 batches
+            if num_batches % 10 == 0:
+                print(f"Batch {num_batches}, Completed: {num_batches*64}/{len(train_dataloader.dataset)}, Loss: {loss.item():.4f}")
+
+        epoch_loss /= num_batches
+        print(f"Epoch {epoch+1}/{num_epochs}, Loss: {epoch_loss:.4f}")
+        # If it's not the last epoch, save the model
+        if epoch != NUM_EPOCHS - 1:
+            save_model(model, MODE, TXT_EMB_MODEL, args, epoch, epoch_loss)
+    # Save the model after training
+    save_model(model, MODE, TXT_EMB_MODEL, args, epoch, epoch_loss, final=True)
 
 def main():
     start = time.time()
@@ -72,72 +130,20 @@ def main():
     # Create the triplet network and set up the training process
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
+    # ? OLD
     # Instantiate the custom model with the desired embedding dimension
-    backbone_body = fasterrcnn_resnet50_fpn(weights='DEFAULT').backbone
-    feature_extractor = CustomModel(backbone_body, EMBEDDING_DIM)
-
-    model = TripletNetwork(feature_extractor).to(device)
-    # Use the TripletMarginLoss from the pytorch_metric_learning
+    # backbone_body = fasterrcnn_resnet50_fpn(weights='DEFAULT').backbone
+    # feature_extractor = CustomModel(backbone_body, EMBEDDING_DIM)
+    
+    if MODE == 'ITT':
+        model = TripletNetworkITT(TXT_EMB_MODEL, EMBEDDING_DIM).to(device)
+    elif MODE == 'TTI':
+        raise NotImplementedError('TripletNetworkTTI not implemented yet')
+    # ? Maybe use the TripletMarginLoss from the pytorch_metric_learning
     criterion = nn.TripletMarginLoss(margin=MARGIN)
 
     if TRAIN:
-        optimizer = torch.optim.Adam(model.parameters(), lr=LEARNING_RATE)
-        if SCHEDULER:
-            scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=STEP_SIZE, gamma=GAMMA)
-
-        for epoch in range(NUM_EPOCHS):
-            model.train()
-            epoch_loss = 0.0
-            num_batches = 0
-            
-            # for anchor_imgs, pos_captions, neg_captions in train_dataloader:
-            #     anchor_imgs = anchor_imgs.to(device)
-            #     print(f'Positive caption from main: {pos_captions}')
-            #     print(f'Negative caption from main: {neg_captions}')
-            for anchor_captions, pos_imgs, neg_imgs in train_dataloader:
-                anchor_captions = anchor_captions.to(device)
-                # print(f'Positive caption from main: {pos_captions}')
-                # print(f'Negative caption from main: {neg_captions}')
-                # Transform the anchor_ids to a list
-                # anchor_ids = anchor_ids.tolist()
-
-                positive_imgs = []
-                negative_imgs = []
-                # for anchor_id in anchor_ids:
-                #     # Get the positive image
-                #     print(f'Anchor id: {anchor_id}')
-                #     # positive_imgs.append(positive_img)
-                #     # negative_imgs.append(negative_img)
-
-                # Stack the images
-                positive_imgs = torch.stack(positive_imgs).to(device)
-                negative_imgs = torch.stack(negative_imgs).to(device)
-                optimizer.zero_grad()
-
-                # anchor_embeddings, positive_embeddings, negative_embeddings = model(anchor_imgs, positive_imgs, negative_imgs)
-                anchor_embeddings, positive_embeddings, negative_embeddings = model([], positive_imgs, negative_imgs)
-
-                loss = criterion(anchor_embeddings, positive_embeddings, negative_embeddings)
-                loss.backward()
-                optimizer.step()
-
-                epoch_loss += loss.item()
-                num_batches += 1
-                if SCHEDULER:
-                    # Update the learning rate
-                    scheduler.step()
-                # Print the loss every 10 batches
-                if num_batches % 10 == 0:
-                    print(f"Batch {num_batches}, Completed: {num_batches*64}/{len(train_dataloader.dataset)}, Loss: {loss.item():.4f}")
-
-            epoch_loss /= num_batches
-            print(f"Epoch {epoch+1}/{NUM_EPOCHS}, Loss: {epoch_loss:.4f}")
-            # If it's not the last epoch, save the model
-            if epoch != NUM_EPOCHS - 1:
-                save_model(model, MODE, TXT_EMB, args, epoch, epoch_loss)
-        
-        # Save the model after training
-        save_model(model, MODE, TXT_EMB, args, epoch, epoch_loss, final=True)
+        train(model, criterion, MODE, train_dataloader, NUM_EPOCHS, SCHEDULER, device)
         end = time.time()
         print(f"Training time: {end - start} seconds")
     else:
