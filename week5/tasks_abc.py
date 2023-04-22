@@ -107,6 +107,52 @@ def train(model, criterion, mode, train_dataloader, num_epochs, scheduler, devic
     # Save the model after training
     save_model(model, MODE, TXT_EMB_MODEL, args, epoch, epoch_loss, final=True)
 
+def validate(model, criterion, mode, val_dataloader, device):
+    model.eval()
+    print('Starting validation')
+    with torch.no_grad():
+
+        IS_ITT = None
+        if mode == 'ITT':
+            IS_ITT = True
+        elif mode == 'TTI':
+            IS_ITT = False
+        else:
+            raise ValueError(f'Invalid mode: {mode}')
+
+        args.ep_losses = []
+        epoch_loss = 0.0
+        num_batches = 0
+        print(f'Starting Validation Epoch')
+        for x, y, z in val_dataloader:
+            # * Images need to be on the GPU if model is on the GPU
+            # * Captions have to stay on the CPU if text embedding model is fasttext
+            if IS_ITT:
+                anchor_imgs = x.to(device)
+                pos_captions = y
+                neg_captions = z
+            else:
+                anchor_captions = x
+                pos_imgs = y.to(device)
+                neg_imgs = z.to(device)
+
+            if IS_ITT:
+                anchor_img_emb, pos_cap_embs, neg_cap_emb = model(anchor_imgs, pos_captions, neg_captions)
+                loss = criterion(anchor_img_emb, pos_cap_embs, neg_cap_emb)
+            else:
+                anchor_cap_emb, pos_img_embs, neg_img_emb = model(anchor_captions, pos_imgs, neg_imgs)
+                loss = criterion(anchor_cap_emb, pos_img_embs, neg_img_emb)
+
+            epoch_loss += loss.item()
+            num_batches += 1
+            # Print the loss every 10 batches
+            if num_batches % 10 == 0:
+                print(f"Batch {num_batches}, Completed: {num_batches*64}/{len(val_dataloader.dataset)}, Loss: {loss.item():.4f}")
+
+        epoch_loss /= num_batches
+        args.ep_losses.append(epoch_loss)  # Append the epoch_loss to the losses list
+        print(f"Validation Loss: {epoch_loss:.4f}")
+
 def main():
     start = time.time()
 
@@ -155,6 +201,9 @@ def main():
     else:
         # Load the model weights
         model.load_state_dict(torch.load(LOAD_MODEL_PATH))
+    
+    if VALIDATE:
+        validate(model, criterion, MODE, val_dataloader, device)
 
 if __name__ == '__main__':
     main()

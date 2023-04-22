@@ -13,7 +13,7 @@ def parse_args():
     parser.add_argument('--test', action='store_true', help='Test the model.')
     parser.add_argument('--mode', type=str, choices=['ITT', 'TTI'], default='ITT', help='Mode to run the model. ITT: Image to text retrieval. TTI: Text to image retrieval.')
     parser.add_argument('--txt_emb_model', type=str, choices=['fasttext', 'bert'], default='fasttext', help='Text embedding to use.')
-    parser.add_argument('--load_model_path', type=str, default='xxx.pth', help='Path to load the model.')
+    parser.add_argument('--load_model_path', type=str, default='modelITT_fasttext_final_2023-04-22_04-30-39.pth.pth', help='Path to load the model.')
     parser.add_argument('--num_epochs', type=int, default=3, help='Number of epochs.')
     parser.add_argument('--scheduler', action='store_true', help='Use scheduler.')
     parser.add_argument('--num_workers', type=int, default=4, help='Number of workers.')
