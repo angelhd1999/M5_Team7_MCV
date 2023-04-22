@@ -63,17 +63,19 @@ def train(model, criterion, mode, train_dataloader, num_epochs, scheduler, devic
         model.train()
         epoch_loss = 0.0
         num_batches = 0
-        
+        print(f'Starting Epoch {epoch + 1}/{num_epochs}')
         for x, y, z in train_dataloader:
+            # * Images need to be on the GPU if model is on the GPU
+            # * Captions have to stay on the CPU if text embedding model is fasttext
             if IS_ITT:
-                anchor_imgs = x
+                anchor_imgs = x.to(device)
                 pos_captions = y
                 neg_captions = z
                 print('pos_captions', pos_captions)
             else:
                 anchor_captions = x
-                pos_imgs = y
-                neg_imgs = z
+                pos_imgs = y.to(device)
+                neg_imgs = z.to(device)
 
             optimizer.zero_grad()
 
@@ -137,6 +139,7 @@ def main():
     
     if MODE == 'ITT':
         model = TripletNetworkITT(TXT_EMB_MODEL, EMBEDDING_DIM).to(device)
+        print('ITT model created')
     elif MODE == 'TTI':
         raise NotImplementedError('TripletNetworkTTI not implemented yet')
     # ? Maybe use the TripletMarginLoss from the pytorch_metric_learning
