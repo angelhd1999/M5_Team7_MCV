@@ -10,11 +10,12 @@ import re
 
 def clean_for_fastext(phrase):
     # Remove newline characters
-    phrase = phrase.strip()
+    phrase = phrase.replace("\n"," ")
     # Add spaces around specified punctuation marks
     phrase = re.sub(r'([.,!?\'/()])', r' \1 ', phrase)
     # Convert uppercase letters to lowercase
     phrase = phrase.lower()
+    return phrase
 
 # Create dataset and dataloader
 class COCOImageToTextDataset(torch.utils.data.Dataset):

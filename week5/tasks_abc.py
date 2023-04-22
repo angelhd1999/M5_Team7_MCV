@@ -59,6 +59,7 @@ def train(model, criterion, mode, train_dataloader, num_epochs, scheduler, devic
     else:
         raise ValueError(f'Invalid mode: {mode}')
 
+    args.ep_losses = []
     for epoch in range(num_epochs):
         model.train()
         epoch_loss = 0.0
@@ -71,7 +72,6 @@ def train(model, criterion, mode, train_dataloader, num_epochs, scheduler, devic
                 anchor_imgs = x.to(device)
                 pos_captions = y
                 neg_captions = z
-                print('pos_captions', pos_captions)
             else:
                 anchor_captions = x
                 pos_imgs = y.to(device)
@@ -97,9 +97,9 @@ def train(model, criterion, mode, train_dataloader, num_epochs, scheduler, devic
             # Print the loss every 10 batches
             if num_batches % 10 == 0:
                 print(f"Batch {num_batches}, Completed: {num_batches*64}/{len(train_dataloader.dataset)}, Loss: {loss.item():.4f}")
-                save_model(model, MODE, TXT_EMB_MODEL, args, epoch, loss)
 
         epoch_loss /= num_batches
+        args.ep_losses.append(epoch_loss)  # Append the epoch_loss to the losses list
         print(f"Epoch {epoch+1}/{num_epochs}, Loss: {epoch_loss:.4f}")
         # If it's not the last epoch, save the model
         if epoch != NUM_EPOCHS - 1:
