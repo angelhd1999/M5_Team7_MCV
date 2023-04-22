@@ -65,9 +65,9 @@ class TripletNetworkITT(nn.Module):
 
         return anchor_img_emb, pos_cap_embs, neg_cap_embs
 
-class TripletNetworkTII(nn.Module):
+class TripletNetworkTTI(nn.Module):
     def __init__(self, txt_emb_model, embedding_dim, device):
-        super(TripletNetworkITT, self).__init__()
+        super(TripletNetworkTTI, self).__init__()
         self.device = device
         ## IMAGE MODEL ##
         # Load the pre-trained ResNet-50 model
@@ -115,7 +115,7 @@ class TripletNetworkTII(nn.Module):
         # Convert the lists of embeddings to tensors
         anchor_cap_embs = torch.tensor(np.stack(anchor_cap_embs), dtype=torch.float).to(self.device)
 
-        print(f'anchor_cap_embs.shape: {anchor_cap_embs.shape}')
+        # print(f'anchor_cap_embs.shape: {anchor_cap_embs.shape}')
         anchor_cap_embs = self.txt_projection(anchor_cap_embs)
 
         return anchor_cap_embs, pos_img_emb, neg_img_emb

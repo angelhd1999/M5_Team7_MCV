@@ -20,7 +20,7 @@ import datetime
 # Internal imports
 from helpers.utils import parse_args
 from helpers.data_helpers import load_coco_dataset, create_dataloaders
-from helpers.model_helpers import TripletNetworkITT, TripletNetworkTII, save_model
+from helpers.model_helpers import TripletNetworkITT, TripletNetworkTTI, save_model
 
 args = parse_args()
 # *Static variables
@@ -71,6 +71,7 @@ def train(model, criterion, mode, train_dataloader, num_epochs, scheduler, devic
                 anchor_imgs = x.to(device)
                 pos_captions = y
                 neg_captions = z
+                print('pos_captions', pos_captions)
             else:
                 anchor_captions = x
                 pos_imgs = y.to(device)
@@ -96,6 +97,7 @@ def train(model, criterion, mode, train_dataloader, num_epochs, scheduler, devic
             # Print the loss every 10 batches
             if num_batches % 10 == 0:
                 print(f"Batch {num_batches}, Completed: {num_batches*64}/{len(train_dataloader.dataset)}, Loss: {loss.item():.4f}")
+                save_model(model, MODE, TXT_EMB_MODEL, args, epoch, loss)
 
         epoch_loss /= num_batches
         print(f"Epoch {epoch+1}/{num_epochs}, Loss: {epoch_loss:.4f}")
@@ -141,7 +143,8 @@ def main():
         model = TripletNetworkITT(TXT_EMB_MODEL, EMBEDDING_DIM, device).to(device)
         print('ITT model created')
     elif MODE == 'TTI':
-        raise NotImplementedError('TripletNetworkTTI not implemented yet')
+        model = TripletNetworkTTI(TXT_EMB_MODEL, EMBEDDING_DIM, device).to(device)
+        print('TTI model created')
     # ? Maybe use the TripletMarginLoss from the pytorch_metric_learning
     criterion = nn.TripletMarginLoss(margin=MARGIN)
 
