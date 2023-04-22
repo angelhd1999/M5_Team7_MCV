@@ -20,7 +20,7 @@ import datetime
 # Internal imports
 from helpers.utils import parse_args
 from helpers.data_helpers import load_coco_dataset, create_dataloaders
-from helpers.model_helpers import CustomModel, TripletNetworkITT, save_model
+from helpers.model_helpers import TripletNetworkITT, TripletNetworkTII, save_model
 
 args = parse_args()
 # *Static variables
@@ -71,7 +71,6 @@ def train(model, criterion, mode, train_dataloader, num_epochs, scheduler, devic
                 anchor_imgs = x.to(device)
                 pos_captions = y
                 neg_captions = z
-                print('pos_captions', pos_captions)
             else:
                 anchor_captions = x
                 pos_imgs = y.to(device)
@@ -131,6 +130,7 @@ def main():
 
     # Create the triplet network and set up the training process
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    print(f'Using device: {device}')
 
     # ? OLD
     # Instantiate the custom model with the desired embedding dimension
@@ -138,7 +138,7 @@ def main():
     # feature_extractor = CustomModel(backbone_body, EMBEDDING_DIM)
     
     if MODE == 'ITT':
-        model = TripletNetworkITT(TXT_EMB_MODEL, EMBEDDING_DIM).to(device)
+        model = TripletNetworkITT(TXT_EMB_MODEL, EMBEDDING_DIM, device).to(device)
         print('ITT model created')
     elif MODE == 'TTI':
         raise NotImplementedError('TripletNetworkTTI not implemented yet')

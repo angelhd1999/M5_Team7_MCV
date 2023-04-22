@@ -40,7 +40,7 @@ class COCOImageToTextDataset(torch.utils.data.Dataset):
 
         positive_captions = [annotation['caption'] for annotation in annotations]
         # Get positive caption at random
-        positive_caption = np.random.choice(positive_captions)
+        positive_caption = np.random.choice(positive_captions).replace("\n"," ") # ? Addded to avoid error: predict processes one line at a time (remove '\n')
         # Get negative caption at random
         while True:
             negative_img_id = np.random.choice(self.img_ids)
@@ -49,7 +49,7 @@ class COCOImageToTextDataset(torch.utils.data.Dataset):
         negative_annotation_ids = coco.getAnnIds(negative_img_id)
         negative_annotations = coco.loadAnns(negative_annotation_ids)
         negative_captions = [annotation['caption'] for annotation in negative_annotations]
-        negative_caption = np.random.choice(negative_captions)
+        negative_caption = np.random.choice(negative_captions).replace("\n"," ") # ? Addded to avoid error: predict processes one line at a time (remove '\n')
 
 
         img_info = self.coco.loadImgs([img_id])[0]
@@ -94,7 +94,7 @@ class COCOTextToImageDataset(torch.utils.data.Dataset):
 
         anchor_captions = [annotation['caption'] for annotation in annotations]
         # Get positive caption at random
-        anchor_caption = np.random.choice(anchor_captions)
+        anchor_caption = np.random.choice(anchor_captions).replace("\n"," ") # ? Addded to avoid error: predict processes one line at a time (remove '\n')
         # Get negative caption at random
         while True:
             negative_img_id = np.random.choice(self.img_ids)

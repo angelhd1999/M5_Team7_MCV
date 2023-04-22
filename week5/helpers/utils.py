@@ -11,7 +11,7 @@ def parse_args():
     parser.add_argument('--train', action='store_true', help='Train the model.')
     parser.add_argument('--validate', action='store_true', help='Validate the model.')
     parser.add_argument('--test', action='store_true', help='Test the model.')
-    parser.add_argument('--mode', type=str, choices=['ITT', 'TTI'], default='ITT', help='Mode to run the model. ITT: Image to text retrieval. TTI: Text to image retrieval.')
+    parser.add_argument('--mode', type=str, choices=['ITT', 'TTI'], default='TII', help='Mode to run the model. ITT: Image to text retrieval. TTI: Text to image retrieval.')
     parser.add_argument('--txt_emb_model', type=str, choices=['fasttext', 'bert'], default='fasttext', help='Text embedding to use.')
     parser.add_argument('--load_model_path', type=str, default='triplet_network_base_task_e_lr_0_0001.pth', help='Path to load the model.')
     parser.add_argument('--num_epochs', type=int, default=1, help='Number of epochs.')
