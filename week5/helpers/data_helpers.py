@@ -125,6 +125,79 @@ class COCOTextToImageDataset(torch.utils.data.Dataset):
         
         return anchor_caption, positive_img, negative_img
 
+# Create dataset and dataloader
+class COCODatasetQueryCaptions(torch.utils.data.Dataset):
+    def __init__(self, coco):
+        self.coco = coco
+        self.img_ids = list(self.coco.imgs.keys())
+
+    def __len__(self):
+        return len(self.img_ids)
+
+    def __getitem__(self, index):
+        img_id = self.img_ids[index]
+
+        # ! I suspected following code provoked the next error when returning cat_ids_clean: RuntimeError: each element in list of batch should be of equal size
+        coco = self.coco
+        annotation_ids = coco.getAnnIds(img_id)
+        annotations = coco.loadAnns(annotation_ids)
+
+        # If the image has no annotations, return another image at random
+        if len(annotations) == 0:
+            # print(f'Img id {img_id} has no annotations. Returning another image at random.')
+            while True:
+                img_id = np.random.choice(self.img_ids)
+                annotation_ids = coco.getAnnIds(img_id)
+                annotations = coco.loadAnns(annotation_ids)
+                if len(annotations) > 0:
+                    break
+            # print(f'Returning image id {img_id} instead.')
+
+        anchor_captions = [annotation['caption'] for annotation in annotations]
+        anchor_captions = [clean_for_fastext(caption) for caption in anchor_captions] # ? Addded to avoid error: predict processes one line at a time (remove '\n')
+        
+        return anchor_captions, img_id
+
+# Create dataset and dataloader
+class COCODatasetQueryImage(torch.utils.data.Dataset):
+    def __init__(self, coco, img_dir, transform):
+        self.img_dir = img_dir
+        self.coco = coco
+        self.img_ids = list(self.coco.imgs.keys())
+        self.transform = transform
+
+    def __len__(self):
+        return len(self.img_ids)
+
+    def __getitem__(self, index):
+        img_id = self.img_ids[index]
+
+        # ! I suspected following code provoked the next error when returning cat_ids_clean: RuntimeError: each element in list of batch should be of equal size
+        coco = self.coco
+        annotation_ids = coco.getAnnIds(img_id)
+        annotations = coco.loadAnns(annotation_ids)
+
+        # If the image has no annotations, return another image at random
+        if len(annotations) == 0:
+            # print(f'Img id {img_id} has no annotations. Returning another image at random.')
+            while True:
+                img_id = np.random.choice(self.img_ids)
+                annotation_ids = coco.getAnnIds(img_id)
+                annotations = coco.loadAnns(annotation_ids)
+                if len(annotations) > 0:
+                    break
+            # print(f'Returning image id {img_id} instead.')
+
+        img_info = self.coco.loadImgs([img_id])[0]
+        img_path = os.path.join(self.img_dir, img_info['file_name'])
+        # Read as PIL image
+        anchor_img = Image.open(img_path).convert('RGB')
+
+        if self.transform:
+            anchor_img = self.transform(anchor_img)
+        
+        return anchor_img, img_id
+
 # Load COCO dataset
 def load_coco_dataset(anns_dir, data_dir, anns_key, img_dir_name):
     ann_file = os.path.join(anns_dir, 'captions_{}.json'.format(anns_key))
@@ -141,3 +214,10 @@ def create_dataloaders(coco, img_dir, transform, batch_size, num_workers, mode):
         raise ValueError('Mode must be either "ITT" or "TTI"')
     dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=True, num_workers=num_workers)
     return dataloader
+
+def create_query_dataloaders(coco, img_dir, transform):
+    img_dataset = COCODatasetQueryImage(coco, img_dir, transform)
+    captions_dataset = COCODatasetQueryCaptions(coco)
+    img_dataloader = DataLoader(img_dataset, shuffle=False)
+    captions_dataloader = DataLoader(captions_dataset, shuffle=False)
+    return img_dataloader, captions_dataloader
